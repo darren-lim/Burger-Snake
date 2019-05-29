@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class D_FoodScript : MonoBehaviour
 {
-    Vector2 pos;
+    private Vector2Int gridPos;
     //get size of playing area
     public int windowXSize;
     public int windowYSize;
@@ -19,7 +19,7 @@ public class D_FoodScript : MonoBehaviour
 
     private void OnEnable()
     {
-        this.transform.position = newPosition();
+        newPosition();
     }
 
     // Update is called once per frame
@@ -28,12 +28,12 @@ public class D_FoodScript : MonoBehaviour
         
     }
 
-    Vector2 newPosition()
+    void newPosition()
     {
         int randPosX = Random.Range(-windowXSize, windowXSize);
         int randPosY = Random.Range(-windowYSize, windowYSize);
-        Vector2 newPos = new Vector2(randPosX, randPosY);
-        return newPos;
+        Vector2Int newPos = new Vector2Int(randPosX, randPosY);
+        this.transform.position = new Vector3(newPos.x, newPos.y);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -41,8 +41,7 @@ public class D_FoodScript : MonoBehaviour
         if(collider.gameObject.tag == "Player")
         {
             //add tail to player and score
-            Debug.Log("SADFGS");
-            this.transform.position = newPosition();
+            newPosition();
         }
     }
 }
