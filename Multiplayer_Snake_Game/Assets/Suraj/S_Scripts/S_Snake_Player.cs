@@ -18,8 +18,6 @@ public class S_Snake_Player : MonoBehaviour
     private float gridMoveTimerMax;
 
     public int snakeSpeed;
-    public int windowXSize;
-    public int windowYSize;
 
 
     // Start is called before the first frame update
@@ -32,19 +30,18 @@ public class S_Snake_Player : MonoBehaviour
             snakeSpeed = 1;
         }
         moveDir = new Vector2Int(0,snakeSpeed);
-        gridMoveTimerMax = 0.03f;
-        gridMoveTimer = gridMoveTimerMax;
     }
 
     // Update is called once per frame
     void Update()
     {
         HandleInput();
-        HandleMovement();
     }
 
     private void HandleInput ()
     {
+        // Handles input of the user
+        // MUST take only local inputs 
         if (Input.GetKeyDown(KeyCode.W) && moveDir.y == 0)
         {
             moveDir.x = 0;
@@ -67,27 +64,21 @@ public class S_Snake_Player : MonoBehaviour
         }
     }
 
-    private void HandleMovement()
+    public void HandleMovement(Vector2Int windowSize, bool wrapAround)
     {
-        // Fixed movement schedule
-        gridMoveTimer += Time.deltaTime;
-        if (gridMoveTimer >= gridMoveTimerMax)
+        gridPos += moveDir;
+        HandleOutOfBounds(windowSize.x, windowSize.y, wrapAround);
+        transform.position = new Vector3(gridPos.x,gridPos.y);
+        if (moveDir.x != 0)
         {
-            gridPos += moveDir;
-            HandleOutOfBounds();
-            gridMoveTimer -= gridMoveTimerMax;
-            transform.position = new Vector3(gridPos.x,gridPos.y);
-            if (moveDir.x != 0)
-            {
-                transform.eulerAngles = new Vector3(0,0,Mathf.Sign(moveDir.x)*-90);
-            } else
-            {
-                transform.eulerAngles = new Vector3(0,0, Mathf.Sign(moveDir.y) < 0? 180: 0);
-            }
+            transform.eulerAngles = new Vector3(0,0,Mathf.Sign(moveDir.x)*-90);
+        } else
+        {
+            transform.eulerAngles = new Vector3(0,0, Mathf.Sign(moveDir.y) < 0? 180: 0);
         }
     }
 
-    private void HandleOutOfBounds()
+    private void HandleOutOfBounds(int windowXSize, int windowYSize, bool wrap)
     {
         if (gridPos.x >= windowXSize || gridPos.x <= -windowXSize)
         {
@@ -99,5 +90,10 @@ public class S_Snake_Player : MonoBehaviour
             // Currently Reset to 0 point on y position
             gridPos.y = 0;
         }
+    }
+
+    private void AddBodyPart()
+    {
+        // Adds body parts when needed
     }
 }
