@@ -12,7 +12,9 @@ public class S_Snake_Player : MonoBehaviour
     private Vector2Int moveDir;
 
     private int snakeSpeed;
-    private int numberOfBodyParts;
+    private GameObject partsHolder;
+    private List<GameObject> bodyParts;
+    private bool selfIntersect;
 
     void Start()
     {
@@ -22,8 +24,10 @@ public class S_Snake_Player : MonoBehaviour
         {
             snakeSpeed = 1;
         }
+        partsHolder = new GameObject(this.name + "\'s Holder");
+        partsHolder.transform.position = new Vector3(0,0);
         moveDir = new Vector2Int(0,snakeSpeed);
-        numberOfBodyParts = 0;
+        bodyParts = new List<GameObject>();
     }
 
     void Update()
@@ -33,12 +37,19 @@ public class S_Snake_Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // Debug.Log(other.gameObject.transform.parent);
+        // Debug.Log(partsHolder.transform);
+        // Debug.Log(partsHolder);
         if(other.gameObject.CompareTag("Food"))
         {
-            Debug.Log(other);
             other.gameObject.SetActive(false);
-            numberOfBodyParts++;
-            Debug.Log(numberOfBodyParts);
+            AddBodyPart();
+        }
+        // Currently does not work correctly
+        else if (!selfIntersect && other.gameObject.transform.parent == partsHolder.transform)
+        {
+            bodyParts.Clear();
+            transform.position = new Vector3(0,0);
         }
         
     }
@@ -73,6 +84,15 @@ public class S_Snake_Player : MonoBehaviour
     {
         gridPos += moveDir;
         HandleOutOfBounds(windowSize.x, windowSize.y, wrapAround);
+        for(int i = bodyParts.Count-1; i>0;--i)
+        {
+            bodyParts[i].transform.position = new Vector3(bodyParts[i-1].transform.position.x,bodyParts[i-1].transform.position.y);
+        }
+        // The "first" body part takes its next value from current head postion
+        if (bodyParts.Count >= 1)
+        {
+            bodyParts[0].transform.position = new Vector3(this.transform.position.x,this.transform.position.y);
+        }
         transform.position = new Vector3(gridPos.x,gridPos.y);
         if (moveDir.x != 0)
         {
@@ -83,22 +103,63 @@ public class S_Snake_Player : MonoBehaviour
         }
     }
 
-    private void HandleOutOfBounds(int windowXSize, int windowYSize, bool wrap)
+    private void HandleOutOfBounds(int windowXSize, int windowYSize, bool canWrap)
     {
-        if (gridPos.x >= windowXSize || gridPos.x <= -windowXSize)
+        if (canWrap)
         {
-            // Currently Reset to 0 point on x position
-            gridPos.x = 0;
+            // Wrap around i.e. Go to the other side
+           if (gridPos.x >= windowXSize || gridPos.x <= -windowXSize)
+            {
+                gridPos.x = -gridPos.x;
+            }
+            if (gridPos.y >= windowYSize || gridPos.y <= -windowYSize)
+            {
+                gridPos.y = -gridPos.y;
+            }
         }
-        if (gridPos.y >= windowYSize || gridPos.y <= -windowYSize)
+        else
         {
-            // Currently Reset to 0 point on y position
-            gridPos.y = 0;
+            // No wrap around level
+            if (gridPos.x >= windowXSize || gridPos.x <= -windowXSize)
+            {
+                // Currently Reset to 0 point on x position
+                gridPos.x = 0;
+            }
+            if (gridPos.y >= windowYSize || gridPos.y <= -windowYSize)
+            {
+                // Currently Reset to 0 point on y position
+                gridPos.y = 0;
+            }
         }
     }
 
     private void AddBodyPart()
     {
         // Adds body parts when needed
+        GameObject body = Instantiate(GameAssets.instance.snakeBodyPrefab);
+        body.transform.parent = partsHolder.transform;
+        if (bodyParts.Count == 0)
+        {
+            // Take the postion of the head
+            body.transform.position = new Vector3(this.transform.position.x,this.transform.position.y);
+        }
+        else
+        {
+            // Take the postion of the current last body part
+            body.transform.position = new Vector3(bodyParts[bodyParts.Count-1].transform.position.x,bodyParts[bodyParts.Count-1].transform.position.y);
+        }
+        body.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.snakeBodySprite;
+        body.GetComponent<PolygonCollider2D>().isTrigger = true;
+        bodyParts.Add(body);
+    }
+
+    public bool getSelfIntersect()
+    {
+        return selfIntersect;
+    }
+
+    public void setSelfIntersect(bool canSelfInter)
+    {
+        selfIntersect = canSelfInter;
     }
 }

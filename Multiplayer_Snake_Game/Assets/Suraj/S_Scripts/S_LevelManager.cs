@@ -8,15 +8,17 @@ public class S_LevelManager
 
     private Vector2Int currentRandomPostion;
     private Vector2Int levelSize;
+    private Vector2Int levelMargin;
     private GameObject levelHolder;
     private List<GameObject> levelObjects;
     private int initialFood;
     // IMPLEMENT WALLS LATER
     // private int initialWalls;
 
-    public S_LevelManager(int xSize, int ySize, int foodNum)
+    public S_LevelManager(int xSize, int ySize, int xMargin, int yMargin, int foodNum)
     {
         this.levelSize = new Vector2Int(xSize,ySize);
+        this.levelMargin = new Vector2Int(xMargin,yMargin);
         this.initialFood = foodNum;
         this.currentRandomPostion = new Vector2Int(0,0);
         levelHolder = GameObject.FindGameObjectWithTag("Holder");
@@ -31,11 +33,11 @@ public class S_LevelManager
     {
         if (randomizeX)
         {
-            currentRandomPostion.x = Random.Range(-levelSize.x,levelSize.x);
+            currentRandomPostion.x = Random.Range(-levelSize.x+levelMargin.x,levelSize.x-levelMargin.x);
         }
         if (randomizeY)
         {
-            currentRandomPostion.y = Random.Range(-levelSize.y,levelSize.y);
+            currentRandomPostion.y = Random.Range(-levelSize.y+levelMargin.y,levelSize.y-levelMargin.y);
         }
     }
 
