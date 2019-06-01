@@ -26,7 +26,6 @@ public class GameHandler : MonoBehaviour
     
     void Start()
     {
-        Debug.Log("GameManager_Start");
         levelBack = GameObject.FindGameObjectWithTag("Background");
         levelSize = new Vector2Int(2*(int)levelBack.transform.localScale.x, 2*(int)levelBack.transform.localScale.y);
         levelGrid = new S_LevelManager(levelSize.x,levelSize.y, numberOfFood);
@@ -36,12 +35,11 @@ public class GameHandler : MonoBehaviour
         {
             playerCount = 1;
         }
+        snakeControllers = new GameObject[playerCount];
         AddPlayers();
-        Debug.Log("GameManager_Initialized");
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    void FixedUpdate()
     {
         simulationTimer += Time.deltaTime;
         if (simulationTimer >= simulationRate)
@@ -57,7 +55,7 @@ public class GameHandler : MonoBehaviour
         if (refreshTimer >= refreshRate)
         {
             // Refresh the level
-            
+            levelGrid.RefreshLevel();
             refreshTimer -= refreshRate;
         }
     }
@@ -67,13 +65,10 @@ public class GameHandler : MonoBehaviour
         for(int i = 0; i < playerCount; ++i)
         {
             // Create a new player control
-            GameObject newController = new GameObject("Snake_Controller_"+(i+1).ToString());
-            newController.transform.parent = this.transform;
-            newController.AddComponent<S_Snake_Player>();
-            newController.AddComponent<PolygonCollider2D>();
-            newController.AddComponent<Rigidbody2D>();
-            newController.GetComponent<Rigidbody2D>().isKinematic = true;
-            snakeControllers[i] = newController;
+            snakeControllers[i] = new GameObject("Snake_Controller_"+(i+1).ToString(), typeof(S_Snake_Player),typeof(SpriteRenderer),typeof(PolygonCollider2D),typeof(Rigidbody2D));
+            snakeControllers[i].transform.parent = this.transform;
+            snakeControllers[i].GetComponent<SpriteRenderer>().sprite = GameAssets.instance.snakeHeadSprite;
+            snakeControllers[i].GetComponent<Rigidbody2D>().isKinematic = true;
         }
     }
 }

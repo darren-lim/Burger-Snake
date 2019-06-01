@@ -11,16 +11,9 @@ public class S_Snake_Player : MonoBehaviour
     // Movement of diection on game area
     private Vector2Int moveDir;
 
-    // How the accumulated time till movement
-    private float gridMoveTimer;
+    private int snakeSpeed;
+    private int numberOfBodyParts;
 
-    // How many second to wait before next move
-    private float gridMoveTimerMax;
-
-    public int snakeSpeed;
-
-
-    // Start is called before the first frame update
     void Start()
     {
         gridPos = new Vector2Int(0,0);
@@ -30,12 +23,24 @@ public class S_Snake_Player : MonoBehaviour
             snakeSpeed = 1;
         }
         moveDir = new Vector2Int(0,snakeSpeed);
+        numberOfBodyParts = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         HandleInput();
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("Food"))
+        {
+            Debug.Log(other);
+            other.gameObject.SetActive(false);
+            numberOfBodyParts++;
+            Debug.Log(numberOfBodyParts);
+        }
+        
     }
 
     private void HandleInput ()
