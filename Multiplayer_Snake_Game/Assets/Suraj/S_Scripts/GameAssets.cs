@@ -20,4 +20,6 @@ public class GameAssets : MonoBehaviour
 
     // Prefab Assets
     public GameObject snakeBodyPrefab;
+    public GameObject snakeHeadPrefab;
+    public GameObject foodPrefab;
 }

@@ -69,7 +69,8 @@ public class S_Snake_Player : MonoBehaviour
                     subPoints();
                 }
             }
-            //Check other snake collison
+        }
+        //Check other snake collison
             else
             {
                 // Destroy all parts and start over
@@ -82,7 +83,6 @@ public class S_Snake_Player : MonoBehaviour
                     subPoints();
                 }
             }
-        }
         
     }
 
