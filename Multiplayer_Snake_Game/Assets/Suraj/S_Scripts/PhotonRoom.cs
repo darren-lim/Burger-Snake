@@ -9,13 +9,15 @@ using System.IO;
 
 public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
 {
+    // Room Info: singleton room + shared UI
     public static PhotonRoom room;
-    public Text currentPlayerCountText;
-
     private PhotonView PV;
+
     public bool isGameLoaded;
     public int currentScene;
+    public Text currentPlayerCountText;
 
+    // Player Info
     private Player[] photonPlayers;
     public int playersInRoom;
     public int myNumberInRoom;
@@ -27,9 +29,9 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private bool readyToCount;
     private bool readyToStart;
     public float startingTime;
-    private float lessThanMax;
-    private float atMax;
-    private float timeToStart;
+    private float lessThanMax; // Time need to start at less than 4 players
+    private float atMax; // Time need to start at 4 players
+    private float timeToStart; // Time at the start
 
 
     void Awake()
@@ -63,6 +65,16 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         SceneManager.sceneLoaded -= OnSceneFinishedLoading;
     }
 
+    void Start()
+    {
+        PV = GetComponent<PhotonView>();
+        readyToCount = false;
+        readyToStart = false;
+        lessThanMax = startingTime;
+        atMax = 6;
+        timeToStart = startingTime;
+    }
+
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
@@ -75,7 +87,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         currentPlayerCountText.text = playersInRoom.ToString() + " in Room";
         if(playersInRoom > 1)
         {
-            readyToCount = false;
+            readyToCount = true;
         }
         if(playersInRoom == MultiplayerSettings.multiplayerSetting.maxPlayers)
         {
@@ -96,7 +108,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         playersInRoom++;
         if(playersInRoom > 1)
         {
-            readyToCount = false;
+            readyToCount = true;
         }
         if(playersInRoom == MultiplayerSettings.multiplayerSetting.maxPlayers)
         {
@@ -109,19 +121,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         }
     }
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        PV = GetComponent<PhotonView>();
-        readyToCount = false;
-        readyToStart = false;
-        lessThanMax = startingTime;
-        atMax = 4;
-        timeToStart = startingTime;
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if(playersInRoom == 1)
@@ -164,7 +163,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         lessThanMax = startingTime;
         timeToStart = startingTime;
-        atMax = 4;
+        atMax = 6;
         readyToCount = false;
         readyToStart = false;
     }

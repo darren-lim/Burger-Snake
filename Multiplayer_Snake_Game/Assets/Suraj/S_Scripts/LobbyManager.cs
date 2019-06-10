@@ -17,6 +17,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         lobby = this;
         // Don't allow join if not connected to server
         randomRoomButton.SetActive(false);
+        cancelButton.SetActive(false);
     }
     
     void Start()
@@ -39,18 +40,23 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();
     }
 
+    // public override void OnJoinedRoom()
+    // {
+    //     base.OnJoinedRoom();
+    //     Debug.Log("We are in a room!");
+    // }
+
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log("Room not available or full");
         CreateRoom();
-
     }
 
     void CreateRoom()
     {
         int randomRoom = Random.Range(0,100000);
         RoomOptions roomOps = new RoomOptions(){IsVisible = true, IsOpen = true, MaxPlayers = (byte)MultiplayerSettings.multiplayerSetting.maxPlayers};
-        PhotonNetwork.CreateRoom("Room " + randomRoom, roomOps);
+        PhotonNetwork.CreateRoom("Room " + randomRoom.ToString(), roomOps);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

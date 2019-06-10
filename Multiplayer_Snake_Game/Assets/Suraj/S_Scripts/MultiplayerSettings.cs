@@ -6,12 +6,13 @@ public class MultiplayerSettings : MonoBehaviour
 {
     public static MultiplayerSettings multiplayerSetting;
     
-    public int maxPlayers;
-    public int menuScene;
-    public int multiplayerScene;
+    public int maxPlayers = 4;
+    public int menuScene = 1;
+    public int multiplayerScene = 3;
 
     private void Awake() 
     {
+        // Setup Singleton
         if (MultiplayerSettings.multiplayerSetting == null)
         {
             MultiplayerSettings.multiplayerSetting = this;
@@ -24,11 +25,5 @@ public class MultiplayerSettings : MonoBehaviour
             }
         }
         DontDestroyOnLoad(this.gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
