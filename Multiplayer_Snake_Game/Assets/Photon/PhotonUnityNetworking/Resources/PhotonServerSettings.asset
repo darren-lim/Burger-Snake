@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-<<<<<<< HEAD
     AppIdRealtime: 
-=======
-    AppIdRealtime: 7cdfb5e2-694a-42e8-b625-1c4d6191b191
->>>>>>> Suraj_Testing
     AppIdChat: 
     AppIdVoice: 
     AppVersion: 
@@ -32,12 +28,8 @@ MonoBehaviour:
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
-<<<<<<< HEAD
-  RpcList: []
-=======
   RpcList:
   - RPC_CreatePlayer
   - RPC_LoadedGameScene
->>>>>>> Suraj_Testing
   DisableAutoOpenWizard: 1
   ShowSettings: 0

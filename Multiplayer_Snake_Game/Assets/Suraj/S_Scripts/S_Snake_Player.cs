@@ -72,9 +72,6 @@ public class S_Snake_Player : MonoBehaviour
             }
         }
         //Check other snake collison
-<<<<<<< HEAD
-            else
-=======
         else
         {
             // Destroy all parts and start over
@@ -83,15 +80,10 @@ public class S_Snake_Player : MonoBehaviour
             transform.position = new Vector3(0, 0);
             other.transform.parent.GetComponent<S_Snake_Player>().addPoints();
             if (points > 0)
->>>>>>> Suraj_Testing
             {
                 subPoints();
             }
-<<<<<<< HEAD
-        
-=======
         }
->>>>>>> Suraj_Testing
     }
 
     private void HandleInput()

@@ -21,10 +21,6 @@ public class GameAssets : MonoBehaviour
     // Prefab Assets - Snake
     public GameObject snakeHeadPrefab;
     public GameObject snakeBodyPrefab;
-<<<<<<< HEAD
-    public GameObject snakeHeadPrefab;
-    public GameObject foodPrefab;
-=======
     public GameObject snakeTailPrefab;
     // Prefab Assets - Food
     public GameObject foodPattyPrefab;
@@ -36,5 +32,4 @@ public class GameAssets : MonoBehaviour
     public GameObject powerupKetchupPrefab;
     public GameObject powerupMusturdPrefab;
     public GameObject powerupHotSaucePrefab;
->>>>>>> Suraj_Testing
 }
