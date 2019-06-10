@@ -324,10 +324,23 @@ MonoBehaviour:
   snakeHeadSprite: {fileID: 21300000, guid: f2edf7759fea343cb96ce4fb4aca5fc7, type: 3}
   snakeBodySprite: {fileID: 21300000, guid: 79e38adde8e7543e8b29bff5b9956356, type: 3}
   foodSprite: {fileID: 21300000, guid: 6e9a868db6a184672b62f1a0894d8bd2, type: 3}
+  snakeHeadPrefab: {fileID: 0}
   snakeBodyPrefab: {fileID: 1649106556039853277, guid: a4d131385a77941cab23c0a3cfdc5574,
     type: 3}
+<<<<<<< HEAD
   snakeHeadPrefab: {fileID: 0}
   foodPrefab: {fileID: 0}
+=======
+  snakeTailPrefab: {fileID: 0}
+  foodPattyPrefab: {fileID: 0}
+  foodLettucePrefab: {fileID: 0}
+  foodTomatoPrefab: {fileID: 0}
+  foodOnionsPrefab: {fileID: 0}
+  foodPicklesPrefab: {fileID: 0}
+  powerupKetchupPrefab: {fileID: 0}
+  powerupMusturdPrefab: {fileID: 0}
+  powerupHotSaucePrefab: {fileID: 0}
+>>>>>>> Suraj_Testing
 --- !u!1 &1540040923
 GameObject:
   m_ObjectHideFlags: 0
