@@ -7,8 +7,10 @@ public class MultiplayerSettings : MonoBehaviour
     public static MultiplayerSettings multiplayerSetting;
     
     public int maxPlayers = 4;
+    
+    // Build order of scenes
     public int menuScene = 1;
-    public int multiplayerScene = 3;
+    public int multiplayerScene = 2;
 
     private void Awake() 
     {

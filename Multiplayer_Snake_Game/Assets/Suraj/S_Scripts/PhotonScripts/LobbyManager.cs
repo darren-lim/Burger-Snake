@@ -30,25 +30,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected to Server!");
         PhotonNetwork.AutomaticallySyncScene = true;
+        // Allow user to join random room
         randomRoomButton.SetActive(true);
     }
-
-    public void OnRandomRoomClicked ()
-    {
-        randomRoomButton.SetActive(false);
-        cancelButton.SetActive(true);
-        PhotonNetwork.JoinRandomRoom();
-    }
-
-    // public override void OnJoinedRoom()
-    // {
-    //     base.OnJoinedRoom();
-    //     Debug.Log("We are in a room!");
-    // }
-
+    
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("Room not available or full");
+        Debug.Log("Room not available or is full");
         CreateRoom();
     }
 
@@ -65,10 +53,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         CreateRoom();
     }
 
+    public void OnRandomRoomClicked ()
+    {
+        randomRoomButton.SetActive(false);
+        cancelButton.SetActive(true);
+        PhotonNetwork.JoinRandomRoom();
+    }
+
     public void OnCancelButtonClicked()
     {
+        PhotonNetwork.LeaveRoom();
         randomRoomButton.SetActive(true);
         cancelButton.SetActive(false);
-        PhotonNetwork.LeaveRoom();
     }
 }

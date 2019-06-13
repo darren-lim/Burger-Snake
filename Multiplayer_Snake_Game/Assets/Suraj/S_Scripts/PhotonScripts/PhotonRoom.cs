@@ -9,7 +9,7 @@ using System.IO;
 
 public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
 {
-    // Room Info: singleton room + shared UI
+    // Room Info: singleton room + photonview + shared UI
     public static PhotonRoom room;
     private PhotonView PV;
 
@@ -36,6 +36,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     void Awake()
     {
+        // Setup singleton
          if (PhotonRoom.room == null)
         {
             PhotonRoom.room = this;
@@ -119,6 +120,12 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
             }
             PhotonNetwork.CurrentRoom.IsOpen = false;
         }
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        Debug.Log("Did we leave the game?");
     }
 
     void Update()
