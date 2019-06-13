@@ -19,7 +19,7 @@ public class GameAssets : MonoBehaviour
     public Sprite foodSprite;
 
     // Prefab Assets - Snake
-    public GameObject snakeHeadPrefab;
+    public GameObject[] snakeHeadPrefab;
     public GameObject snakeBodyPrefab;
     public GameObject snakeTailPrefab;
     // Prefab Assets - Food
