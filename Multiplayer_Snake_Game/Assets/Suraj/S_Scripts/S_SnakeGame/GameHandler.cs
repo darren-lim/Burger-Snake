@@ -68,6 +68,16 @@ public class GameHandler : MonoBehaviour
         }
     }
 
+    public Vector2Int GetWindowSize()
+    {
+        return levelSize;
+    }
+
+    public bool GetWarp()
+    {
+        return wrapAround;
+    }
+
     public int AddPlayers()
     {
         // for(int i = 0; i < playerCount; ++i)
