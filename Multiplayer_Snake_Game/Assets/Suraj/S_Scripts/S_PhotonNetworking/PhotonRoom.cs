@@ -126,7 +126,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
-        playerInGame--;
+        playersInRoom--;
         currentPlayerCountText.text = playersInRoom.ToString() + " in Room";
         currentTimerText.text = "Game countdown stopped";
         
@@ -135,6 +135,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
+        Debug.Log("Exited Room");
         currentPlayerCountText.text = "Not in any room";
         currentTimerText.text = "";
     }

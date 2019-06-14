@@ -13,10 +13,21 @@ public class GameAssets : MonoBehaviour
         instance = this;
     }
 
+    private void OnEnable() 
+    {
+        if(GameAssets.instance == null)
+        {
+            GameAssets.instance = this;
+        }
+    }
+
     // Sprites Assets - Will soon be removed (use prefabs instead)
     public Sprite snakeHeadSprite;
     public Sprite snakeBodySprite;
     public Sprite foodSprite;
+
+    // Transforms - SpawnPoints
+    public Transform[] SpawnPoints;
 
     // Prefab Assets - Snake
     public GameObject[] snakeHeadPrefab;

@@ -20,7 +20,7 @@ public class S_Snake_Player : MonoBehaviour
 
     void Start()
     {
-        gridPos = new Vector2Int(0, 0);
+        gridPos = new Vector2Int((int)this.transform.position.x, (int)this.transform.position.y);
         //Start moving up
         if (snakeSpeed <= 0)
         {

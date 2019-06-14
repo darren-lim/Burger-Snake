@@ -9,6 +9,7 @@ TagManager:
   - Holder
   - Body
   - Head
+  - Room
   layers:
   - Default
   - TransparentFX
