@@ -16,6 +16,8 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public bool isGameLoaded;
     public int currentScene;
     public Text currentPlayerCountText;
+    public Text currentTimerText;
+    public Canvas LobbyCanvas;
 
     // Player Info
     private Player[] photonPlayers;
@@ -73,6 +75,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         lessThanMax = startingTime;
         atMax = 6;
         timeToStart = startingTime;
+        currentTimerText.text = "";
     }
 
     public override void OnJoinedRoom()
@@ -103,9 +106,9 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-        Debug.Log("A new player joined the room.");
         photonPlayers = PhotonNetwork.PlayerList;
         playersInRoom++;
+        currentPlayerCountText.text = playersInRoom.ToString() + " in Room";
         if(playersInRoom > 1)
         {
             readyToCount = true;
@@ -121,6 +124,25 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         }
     }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+        playersInRoom--;
+        ResetTimer();
+        currentPlayerCountText.text = playersInRoom.ToString() + " in Room";
+        currentTimerText.text = "Game countdown stopped";
+        
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        Debug.Log("Exited Room");
+        ResetTimer();
+        currentPlayerCountText.text = "Not in any room";
+        currentTimerText.text = "";
+    }
+
     void Update()
     {
         if(playersInRoom == 1)
@@ -134,13 +156,18 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
                 atMax -= Time.deltaTime;
                 lessThanMax = atMax;
                 timeToStart = atMax;
+                currentTimerText.text = "Time till start " + timeToStart.ToString("0.00");
             }
             else if(readyToCount)
             {
                 lessThanMax -= Time.deltaTime;
                 timeToStart = lessThanMax;
+                currentTimerText.text = "Time till start " + timeToStart.ToString("0.00");
             }
-            Debug.Log("Current time to start " + timeToStart.ToString());
+            else
+            {
+                currentTimerText.text = "Game countdown";
+            }
             if(timeToStart<=0)
             {
                 StartGame();
@@ -148,9 +175,15 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         }
     }
 
+    // public Player getSpecifcPlayers(int playerIndex)
+    // {
+    //     return photonPlayers[playerIndex];
+    // }
+
     void StartGame()
     {
         isGameLoaded = true;
+        LobbyCanvas.gameObject.SetActive(false);
         if(!PhotonNetwork.IsMasterClient)
         {
             return;

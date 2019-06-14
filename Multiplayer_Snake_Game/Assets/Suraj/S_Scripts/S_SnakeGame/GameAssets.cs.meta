@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 57539da46ad5d48ea8b5e44377470e99
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - snakeHeadSprite: {fileID: 21300000, guid: ce8c25c280a6fa644b5b0ed1eaf5e983, type: 3}
+  - snakeBodySprite: {fileID: 21300000, guid: b968abf42815173428438efb401f1c7b, type: 3}
+  - foodSprite: {fileID: 21300000, guid: 85b75fdc461e13a4796fb9a452be2c8e, type: 3}
+  - snakeBodyPrefab: {instanceID: 0}
+  - snakeTailPrefab: {instanceID: 0}
+  - foodPattyPrefab: {instanceID: 0}
+  - foodLettucePrefab: {instanceID: 0}
+  - foodTomatoPrefab: {instanceID: 0}
+  - foodOnionsPrefab: {instanceID: 0}
+  - foodPicklesPrefab: {instanceID: 0}
+  - powerupKetchupPrefab: {instanceID: 0}
+  - powerupMusturdPrefab: {instanceID: 0}
+  - powerupHotSaucePrefab: {instanceID: 0}
+  executionOrder: -50
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
