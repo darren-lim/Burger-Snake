@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.IO;
 
 public class NetworkPlayerController : MonoBehaviour
 {
     private PhotonView PV;
+    int playerID;
     public GameObject myAvatar;
 
 
@@ -17,7 +19,12 @@ public class NetworkPlayerController : MonoBehaviour
         {
             if(GameObject.FindGameObjectWithTag("Handler") != null)
             {
-                myAvatar = GameObject.FindGameObjectWithTag("Handler").GetComponent<GameHandler>().AddPlayers();
+                playerID = GameObject.FindGameObjectWithTag("Room").GetComponent<PhotonRoom>().myNumberInRoom;
+                string playerModel = "player" + playerID.ToString() + "Controller";
+                myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs",playerModel),
+                                                    GameAssets.instance.SpawnPoints[playerID-1].position,
+                                                    GameAssets.instance.SpawnPoints[playerID-1].rotation,
+                                                    0);
             }
         }
     }
@@ -25,10 +32,20 @@ public class NetworkPlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (myAvatar == null && GameObject.FindGameObjectWithTag("Handler") != null)
-        {
-            myAvatar = GameObject.FindGameObjectWithTag("Handler").GetComponent<GameHandler>().AddPlayers();
-        }
+        // if (myAvatar == null && GameObject.FindGameObjectWithTag("Handler") != null)
+        // {
+        //     playerID = GameObject.FindGameObjectWithTag("Handler").GetComponent<GameHandler>().AddPlayers();
+        //     string playerModel = "player" + playerID.ToString() + "Controller";
+        //     myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs",playerModel),
+        //                                         GameAssets.instance.SpawnPoints[playerID-1].position,
+        //                                         GameAssets.instance.SpawnPoints[playerID-1].rotation,
+        //                                         0);
+        // }
+
+        // if (myAvatar.transform.parent == null)
+        // {
+        //     myAvatar.transform.parent = GameObject.FindGameObjectWithTag("Handler").transform;
+        // }
         
     }
 }

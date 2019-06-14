@@ -39,8 +39,8 @@ public class S_Snake_Player : MonoBehaviourPun
             snakeSpeed = 1;
         }
         partsHolder = new GameObject(this.name + "\'s Holder");
-        partsHolder.transform.position = new Vector3(0, 0);
-        partsHolder.transform.parent = this.transform.parent.transform;
+        partsHolder.transform.position = new Vector3(gridPos.x, gridPos.y);
+        // partsHolder.transform.parent = this.transform.parent.transform;
         moveDir = new Vector2Int(0, snakeSpeed);
         bodyParts = new List<GameObject>();
         points = 0;
@@ -68,12 +68,12 @@ public class S_Snake_Player : MonoBehaviourPun
             AddBodyPart();
         }
         // Currently does not work correctly
-        else if (!selfIntersect && other.gameObject.transform.parent == partsHolder.transform)
-        {
-            // Destroy all parts and start over
-            bodyParts.Clear();
-            transform.position = new Vector3(0, 0);
-        }
+        // else if (!selfIntersect && other.gameObject.transform.parent == partsHolder.transform)
+        // {
+        //     // Destroy all parts and start over
+        //     bodyParts.Clear();
+        //     transform.position = new Vector3(0, 0);
+        // }
         else if (other.gameObject.CompareTag("Body"))
         {
             // Check self intersection
@@ -134,6 +134,8 @@ public class S_Snake_Player : MonoBehaviourPun
 
     public void HandleMovement()
     {
+        Debug.Log("Grid Pos: " + gridPos.ToString());
+        Debug.Log("Move Dir: " + moveDir.ToString());
         gridPos += moveDir;
         HandleOutOfBounds(levelSize.x, levelSize.y, wrapAround);
         for (int i = bodyParts.Count - 1; i > 0; --i)

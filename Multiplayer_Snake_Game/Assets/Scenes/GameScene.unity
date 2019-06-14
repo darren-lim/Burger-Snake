@@ -530,9 +530,9 @@ MonoBehaviour:
   - {fileID: 7593457333621220499, guid: bb20a023e41a24fccb93c05c745753da, type: 3}
   - {fileID: 7953395538728826807, guid: 8ee19fad5d58643f995a484709c77b00, type: 3}
   - {fileID: 3175648155128533454, guid: faab09db2975745109b34c90f770a8a2, type: 3}
-  snakeBodyPrefab: {fileID: 3175648155128533454, guid: faab09db2975745109b34c90f770a8a2,
+  snakeBodyPrefab: {fileID: 1649106556039853277, guid: a4d131385a77941cab23c0a3cfdc5574,
     type: 3}
-  snakeTailPrefab: {fileID: 7953395538728826807, guid: 8ee19fad5d58643f995a484709c77b00,
+  snakeTailPrefab: {fileID: 1649106556039853277, guid: a4d131385a77941cab23c0a3cfdc5574,
     type: 3}
   foodPattyPrefab: {fileID: 0}
   foodLettucePrefab: {fileID: 0}
@@ -1114,4 +1114,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c227c94ca0bb744cf918211c9f0e86df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelSize: {x: 0, y: 0}
+  playerCount: 0
+  playersAdded: 0

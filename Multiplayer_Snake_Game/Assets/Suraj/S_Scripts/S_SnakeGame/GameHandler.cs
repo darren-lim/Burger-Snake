@@ -7,7 +7,6 @@ public class GameHandler : MonoBehaviour
     // Level-focused Details
     private GameObject levelBack;
     private S_LevelManager levelGrid;
-    [SerializeField]
     private Vector2Int levelSize;
     private int marginPercent = 10;
     private float refreshRate = 10.0f;
@@ -16,8 +15,10 @@ public class GameHandler : MonoBehaviour
     private float simulationTimer;
 
     // Player-focused Details
+    [SerializeField]
     private int playerCount;
-    private GameObject[] snakeControllers;
+    // private GameObject[] snakeControllers;
+    [SerializeField]
     private int playersAdded = 0;
 
 
@@ -42,22 +43,22 @@ public class GameHandler : MonoBehaviour
         {
             playerCount = 1;
         }
-        snakeControllers = new GameObject[playerCount];
+        // snakeControllers = new GameObject[playerCount];
         // AddPlayers();
     }
 
     void FixedUpdate()
     {
-        simulationTimer += Time.deltaTime;
-        if (simulationTimer >= simulationRate)
-        {
-            // Move all players simultaneously from command of the server
-            foreach(GameObject controller in snakeControllers)
-            {
-                //controller.GetComponent<S_Snake_Player>().HandleMovement(levelSize,wrapAround);
-            }
-            simulationTimer -= simulationRate;
-        }
+        // simulationTimer += Time.deltaTime;
+        // if (simulationTimer >= simulationRate)
+        // {
+        //     // Move all players simultaneously from command of the server
+        //     foreach(GameObject controller in snakeControllers)
+        //     {
+        //         //controller.GetComponent<S_Snake_Player>().HandleMovement(levelSize,wrapAround);
+        //     }
+        //     simulationTimer -= simulationRate;
+        // }
         refreshTimer += Time.deltaTime;
         if (refreshTimer >= refreshRate)
         {
@@ -67,7 +68,7 @@ public class GameHandler : MonoBehaviour
         }
     }
 
-    public GameObject AddPlayers()
+    public int AddPlayers()
     {
         // for(int i = 0; i < playerCount; ++i)
         // {
@@ -80,13 +81,20 @@ public class GameHandler : MonoBehaviour
         //     // Transfer Ownership to other players if not own
         //     snakeControllers[i].GetComponent<S_Snake_Player>().SetOwner(i);
         // }
-        GameObject newPlayer = Instantiate(GameAssets.instance.snakeHeadPrefab[playersAdded],
-                                           GameAssets.instance.SpawnPoints[playersAdded].position,
-                                           GameAssets.instance.SpawnPoints[playersAdded].rotation,
-                                           this.transform);
-        newPlayer.name = "Snake_Controller_"+playersAdded.ToString();
-        newPlayer.GetComponent<S_Snake_Player>().SetSizeWrap(levelSize,wrapAround);
-        playersAdded++;
-        return newPlayer;
+        // GameObject newPlayer = Instantiate(GameAssets.instance.snakeHeadPrefab[playersAdded],
+        //                                    GameAssets.instance.SpawnPoints[playersAdded].position,
+        //                                    GameAssets.instance.SpawnPoints[playersAdded].rotation,
+        //                                    this.transform);
+        // newPlayer.name = "Snake_Controller_"+playersAdded.ToString();
+        // newPlayer.GetComponent<S_Snake_Player>().SetSizeWrap(levelSize,wrapAround);
+        if(playersAdded <= playerCount)
+        {
+            playersAdded++;
+            return playersAdded;
+        }
+        else
+        {
+            return -1;
+        }
     }
 }
