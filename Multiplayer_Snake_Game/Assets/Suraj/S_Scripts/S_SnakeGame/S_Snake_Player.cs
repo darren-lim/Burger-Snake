@@ -63,9 +63,11 @@ public class S_Snake_Player : MonoBehaviourPun
         {
             if (other.gameObject.CompareTag("Food"))
             {
-                other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
+                PV.RPC("SetFoodInactive", RpcTarget.AllBufferedViaServer, other.gameObject.GetComponent<PhotonView>().ViewID);
+                //SetFoodInactive(other.gameObject);
+                //other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
                 AddBodyPart();
-            }
+        }
             // //Check other snake collison
             else if (!other.gameObject.CompareTag(tag))
             {
@@ -91,6 +93,13 @@ public class S_Snake_Player : MonoBehaviourPun
                 }
             }
         }
+    }
+
+    [PunRPC]
+    public void SetFoodInactive(int food)
+    {
+        PhotonView Disable = PhotonView.Find(food);
+        Disable.transform.gameObject.SetActive(false);
     }
 
     private void HandleInput()

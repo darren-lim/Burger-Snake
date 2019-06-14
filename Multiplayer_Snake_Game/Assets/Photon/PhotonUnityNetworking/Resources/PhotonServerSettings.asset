@@ -40,5 +40,6 @@ MonoBehaviour:
   - RPC_RemoveBodyPart
   - RPC_subPoints
   - AddBodyPart
+  - SetFoodInactive
   DisableAutoOpenWizard: 1
   ShowSettings: 0

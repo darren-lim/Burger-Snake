@@ -41,7 +41,9 @@ public class GameHandler : MonoBehaviourPun
         PV = GetComponent<PhotonView>();
         levelBack = GameObject.FindGameObjectWithTag("Background");
         levelSize = new Vector2Int(2*(int)levelBack.transform.localScale.x, 2*(int)levelBack.transform.localScale.y);
-        levelGrid = new S_LevelManager(levelSize.x,levelSize.y, levelSize.x/marginPercent, levelSize.x/marginPercent, numberOfFood);
+        levelGrid = gameObject.AddComponent<S_LevelManager>();
+        levelGrid.StartManager(levelSize.x, levelSize.y, levelSize.x / marginPercent, levelSize.x / marginPercent, numberOfFood);
+        //levelGrid = new S_LevelManager(levelSize.x,levelSize.y, levelSize.x/marginPercent, levelSize.x/marginPercent, numberOfFood);
         refreshTimer = 0.0f;
         roomCache = GameObject.FindGameObjectWithTag("Room");
         if(roomCache != null)
