@@ -65,30 +65,30 @@ public class S_Snake_Player : MonoBehaviourPun
             AddBodyPart();
         }
         // Check self intersection
-        else if (!selfIntersect && other.gameObject.CompareTag(tag))
-        {
-            // Destroy all parts and start over
-            // Subtract point from self
-            bodyParts.Clear();
-            transform.position = new Vector3(0, 0);
-            if (points > 0)
-            {
-                subPoints();
-            }
-        }
-        //Check other snake collison
-        else
-        {
-            // Destroy all parts and start over
-            // Add point to other, subtract point from self
-            bodyParts.Clear();
-            transform.position = new Vector3(0, 0);
-            other.transform.parent.GetComponent<S_Snake_Player>().addPoints();
-            if (points > 0)
-            {
-                subPoints();
-            }
-        }
+        // else if (!selfIntersect && other.gameObject.CompareTag(tag))
+        // {
+        //     // Destroy all parts and start over
+        //     // Subtract point from self
+        //     bodyParts.Clear();
+        //     transform.position = new Vector3(0, 0);
+        //     if (points > 0)
+        //     {
+        //         subPoints();
+        //     }
+        // }
+        // //Check other snake collison
+        // else
+        // {
+        //     // Destroy all parts and start over
+        //     // Add point to other, subtract point from self
+        //     bodyParts.Clear();
+        //     transform.position = new Vector3(0, 0);
+        //     other.transform.parent.GetComponent<S_Snake_Player>().addPoints();
+        //     if (points > 0)
+        //     {
+        //         subPoints();
+        //     }
+        // }
     }
 
     private void HandleInput()
