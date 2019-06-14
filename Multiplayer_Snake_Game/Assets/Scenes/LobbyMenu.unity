@@ -392,6 +392,7 @@ MonoBehaviour:
   currentScene: 1
   currentPlayerCountText: {fileID: 1242576293}
   currentTimerText: {fileID: 343302547}
+  LobbyCanvas: {fileID: 1837594151}
   playersInRoom: 0
   myNumberInRoom: 0
   playerInGame: 0
@@ -1273,7 +1274,7 @@ GameObject:
   - component: {fileID: 1837594150}
   - component: {fileID: 1837594149}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: LobbyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

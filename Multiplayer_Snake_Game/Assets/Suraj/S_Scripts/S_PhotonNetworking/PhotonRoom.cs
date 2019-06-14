@@ -17,6 +17,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public int currentScene;
     public Text currentPlayerCountText;
     public Text currentTimerText;
+    public Canvas LobbyCanvas;
 
     // Player Info
     private Player[] photonPlayers;
@@ -105,9 +106,9 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-        Debug.Log("A new player joined the room.");
         photonPlayers = PhotonNetwork.PlayerList;
         playersInRoom++;
+        currentPlayerCountText.text = playersInRoom.ToString() + " in Room";
         if(playersInRoom > 1)
         {
             readyToCount = true;
@@ -127,6 +128,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         base.OnPlayerLeftRoom(otherPlayer);
         playersInRoom--;
+        ResetTimer();
         currentPlayerCountText.text = playersInRoom.ToString() + " in Room";
         currentTimerText.text = "Game countdown stopped";
         
@@ -136,6 +138,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         base.OnLeftRoom();
         Debug.Log("Exited Room");
+        ResetTimer();
         currentPlayerCountText.text = "Not in any room";
         currentTimerText.text = "";
     }
@@ -175,6 +178,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     void StartGame()
     {
         isGameLoaded = true;
+        LobbyCanvas.gameObject.SetActive(false);
         if(!PhotonNetwork.IsMasterClient)
         {
             return;
