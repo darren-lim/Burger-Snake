@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7953395538728826805}
   - component: {fileID: 7953395538728826806}
   - component: {fileID: 1556216556676001726}
-  - component: {fileID: -6244889733530182199}
+  - component: {fileID: -4319333807996207709}
   m_Layer: 0
   m_Name: player3Controller
   m_TagString: Untagged
@@ -158,13 +158,14 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 0
-  OwnershipTransfer: 0
-  ObservedComponents: []
+  Synchronization: 3
+  OwnershipTransfer: 1
+  ObservedComponents:
+  - {fileID: -4319333807996207709}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-6244889733530182199
+--- !u!114 &-4319333807996207709
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,6 +174,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7953395538728826807}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74a6a4f07871f4f239984b06dd21b7db, type: 3}
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0

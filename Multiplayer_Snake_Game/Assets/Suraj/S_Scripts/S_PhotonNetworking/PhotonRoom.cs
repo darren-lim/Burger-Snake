@@ -175,6 +175,11 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         }
     }
 
+    // public Player getSpecifcPlayers(int playerIndex)
+    // {
+    //     return photonPlayers[playerIndex];
+    // }
+
     void StartGame()
     {
         isGameLoaded = true;

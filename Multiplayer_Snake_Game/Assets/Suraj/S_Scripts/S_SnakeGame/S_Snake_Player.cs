@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class S_Snake_Player : MonoBehaviour
+public class S_Snake_Player : MonoBehaviourPun
 {
 
     // Grid postions on game area
     private Vector2Int gridPos;
+    private Vector2Int levelSize;
+    private bool wrapAround;
 
     // Movement of diection on game area
     private Vector2Int moveDir;
@@ -18,8 +22,16 @@ public class S_Snake_Player : MonoBehaviour
 
     private uint points;
 
+    //Networking
+    private PhotonView PV;
+
+    private float simulationRate = 0.2f;
+    private float simulationTimer;
+
     void Start()
     {
+        PV = GetComponent<PhotonView>();
+
         gridPos = new Vector2Int((int)this.transform.position.x, (int)this.transform.position.y);
         //Start moving up
         if (snakeSpeed <= 0)
@@ -34,8 +46,14 @@ public class S_Snake_Player : MonoBehaviour
         points = 0;
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        simulationTimer += Time.deltaTime;
+        if (simulationTimer >= simulationRate)
+        {
+            HandleMovement();
+            simulationTimer -= simulationRate;
+        }
         HandleInput();
     }
 
@@ -89,33 +107,35 @@ public class S_Snake_Player : MonoBehaviour
     private void HandleInput()
     {
         // Handles input of the user
-        // MUST take only local inputs 
-        if (Input.GetKeyDown(KeyCode.W) && moveDir.y == 0)
-        {
-            moveDir.x = 0;
-            moveDir.y = +snakeSpeed;
-        }
-        else if (Input.GetKeyDown(KeyCode.S) && moveDir.y == 0)
-        {
-            moveDir.x = 0;
-            moveDir.y = -snakeSpeed;
-        }
-        else if (Input.GetKeyDown(KeyCode.A) && moveDir.x == 0)
-        {
-            moveDir.x = -snakeSpeed;
-            moveDir.y = 0;
-        }
-        else if (Input.GetKeyDown(KeyCode.D) && moveDir.x == 0)
-        {
-            moveDir.x = +snakeSpeed;
-            moveDir.y = 0;
+        // MUST take only local inputs
+        if(PV.IsMine){
+            if (Input.GetKeyDown(KeyCode.W) && moveDir.y == 0)
+            {
+                moveDir.x = 0;
+                moveDir.y = +snakeSpeed;
+            }
+            else if (Input.GetKeyDown(KeyCode.S) && moveDir.y == 0)
+            {
+                moveDir.x = 0;
+                moveDir.y = -snakeSpeed;
+            }
+            else if (Input.GetKeyDown(KeyCode.A) && moveDir.x == 0)
+            {
+                moveDir.x = -snakeSpeed;
+                moveDir.y = 0;
+            }
+            else if (Input.GetKeyDown(KeyCode.D) && moveDir.x == 0)
+            {
+                moveDir.x = +snakeSpeed;
+                moveDir.y = 0;
+            }
         }
     }
 
-    public void HandleMovement(Vector2Int windowSize, bool wrapAround)
+    public void HandleMovement()
     {
         gridPos += moveDir;
-        HandleOutOfBounds(windowSize.x, windowSize.y, wrapAround);
+        HandleOutOfBounds(levelSize.x, levelSize.y, wrapAround);
         for (int i = bodyParts.Count - 1; i > 0; --i)
         {
             bodyParts[i].transform.position = new Vector3(bodyParts[i - 1].transform.position.x, bodyParts[i - 1].transform.position.y);
@@ -212,5 +232,11 @@ public class S_Snake_Player : MonoBehaviour
     public void subPoints(float mult = 1.0f)
     {
         points -= (uint)(1 * mult);
+    }
+
+    public void SetSizeWrap(Vector2Int size, bool wrap)
+    {
+        levelSize = size;
+        wrapAround = wrap;
     }
 }

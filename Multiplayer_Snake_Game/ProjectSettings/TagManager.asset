@@ -10,6 +10,7 @@ TagManager:
   - Body
   - Head
   - Room
+  - Handler
   layers:
   - Default
   - TransparentFX

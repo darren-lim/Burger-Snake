@@ -18,12 +18,16 @@ public class GameHandler : MonoBehaviour
     // Player-focused Details
     private int playerCount;
     private GameObject[] snakeControllers;
+    private int playersAdded = 0;
 
 
     // Options for gameplay - CAN BE EXPANDED LATER
     private int numberOfFood = 20;
     private bool wrapAround = true;
     private bool selfCollision = true;
+
+    // Network Stuff
+    private GameObject roomCache;
     
     void Start()
     {
@@ -32,13 +36,14 @@ public class GameHandler : MonoBehaviour
         levelGrid = new S_LevelManager(levelSize.x,levelSize.y, levelSize.x/marginPercent, levelSize.x/marginPercent, numberOfFood);
         refreshTimer = 0.0f;
         simulationTimer = 0.0f;
-        playerCount = GameObject.FindGameObjectWithTag("Room").GetComponent<PhotonRoom>().playersInRoom;
+        roomCache = GameObject.FindGameObjectWithTag("Room");
+        playerCount = roomCache.GetComponent<PhotonRoom>().playersInRoom;
         if (playerCount <= 0)
         {
             playerCount = 1;
         }
         snakeControllers = new GameObject[playerCount];
-        AddPlayers();
+        // AddPlayers();
     }
 
     void FixedUpdate()
@@ -49,7 +54,7 @@ public class GameHandler : MonoBehaviour
             // Move all players simultaneously from command of the server
             foreach(GameObject controller in snakeControllers)
             {
-                controller.GetComponent<S_Snake_Player>().HandleMovement(levelSize,wrapAround);
+                //controller.GetComponent<S_Snake_Player>().HandleMovement(levelSize,wrapAround);
             }
             simulationTimer -= simulationRate;
         }
@@ -62,21 +67,26 @@ public class GameHandler : MonoBehaviour
         }
     }
 
-    private void AddPlayers()
+    public GameObject AddPlayers()
     {
-        for(int i = 0; i < playerCount; ++i)
-        {
-            // Create a new player control - Now with prefab
-            snakeControllers[i] = Instantiate(GameAssets.instance.snakeHeadPrefab[i],
-                                                GameAssets.instance.SpawnPoints[i].position,
-                                                GameAssets.instance.SpawnPoints[i].rotation,
-                                                this.transform);
-            snakeControllers[i].name = "Snake_Controller_"+i.ToString();
-            // snakeControllers[i] = new GameObject("Snake_Controller_"+i.ToString(), typeof(S_Snake_Player),typeof(SpriteRenderer),typeof(PolygonCollider2D),typeof(Rigidbody2D));
-            // snakeControllers[i].transform.parent = this.transform;
-            // snakeControllers[i].GetComponent<S_Snake_Player>().setSelfIntersect(selfCollision);
-            // snakeControllers[i].GetComponent<SpriteRenderer>().sprite = GameAssets.instance.snakeHeadSprite;
-            // snakeControllers[i].GetComponent<Rigidbody2D>().isKinematic = true;
-        }
+        // for(int i = 0; i < playerCount; ++i)
+        // {
+        //     // Create a new player control - Now with prefab
+        //     snakeControllers[i] = Instantiate(GameAssets.instance.snakeHeadPrefab[i],
+        //                                         GameAssets.instance.SpawnPoints[i].position,
+        //                                         GameAssets.instance.SpawnPoints[i].rotation,
+        //                                         this.transform);
+        //     snakeControllers[i].name = "Snake_Controller_"+i.ToString();
+        //     // Transfer Ownership to other players if not own
+        //     snakeControllers[i].GetComponent<S_Snake_Player>().SetOwner(i);
+        // }
+        GameObject newPlayer = Instantiate(GameAssets.instance.snakeHeadPrefab[playersAdded],
+                                           GameAssets.instance.SpawnPoints[playersAdded].position,
+                                           GameAssets.instance.SpawnPoints[playersAdded].rotation,
+                                           this.transform);
+        newPlayer.name = "Snake_Controller_"+playersAdded.ToString();
+        newPlayer.GetComponent<S_Snake_Player>().SetSizeWrap(levelSize,wrapAround);
+        playersAdded++;
+        return newPlayer;
     }
 }
