@@ -71,7 +71,6 @@ public class GameHandler : MonoBehaviour
             snakeControllers[i].GetComponent<S_Snake_Player>().setSelfIntersect(selfCollision);
             snakeControllers[i].GetComponent<SpriteRenderer>().sprite = GameAssets.instance.snakeHeadSprite;
             snakeControllers[i].GetComponent<Rigidbody2D>().isKinematic = true;
-            Debug.Log("Added Player");
         }
     }
 }
