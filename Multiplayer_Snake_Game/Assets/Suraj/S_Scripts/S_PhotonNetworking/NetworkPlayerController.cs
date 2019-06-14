@@ -11,7 +11,7 @@ public class NetworkPlayerController : MonoBehaviour
     public GameObject myAvatar;
 
 
-    // Start is called before the first frame update
+    // Initializes the network avatar with the main snake controller
     void Start()
     {
         PV = GetComponent<PhotonView>();
@@ -32,25 +32,5 @@ public class NetworkPlayerController : MonoBehaviour
                     GameObject.FindGameObjectWithTag("Handler").GetComponent<GameHandler>().GetWarp());
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // if (myAvatar == null && GameObject.FindGameObjectWithTag("Handler") != null)
-        // {
-        //     playerID = GameObject.FindGameObjectWithTag("Handler").GetComponent<GameHandler>().AddPlayers();
-        //     string playerModel = "player" + playerID.ToString() + "Controller";
-        //     myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs",playerModel),
-        //                                         GameAssets.instance.SpawnPoints[playerID-1].position,
-        //                                         GameAssets.instance.SpawnPoints[playerID-1].rotation,
-        //                                         0);
-        // }
-
-        // if (myAvatar.transform.parent == null)
-        // {
-        //     myAvatar.transform.parent = GameObject.FindGameObjectWithTag("Handler").transform;
-        // }
-        
     }
 }

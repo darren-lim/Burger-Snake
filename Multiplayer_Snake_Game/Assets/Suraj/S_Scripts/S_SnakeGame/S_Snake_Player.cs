@@ -19,7 +19,7 @@ public class S_Snake_Player : MonoBehaviourPun
     private GameObject partsHolder;
     private List<GameObject> bodyParts;
     private bool selfIntersect;
-
+    [SerializeField]
     private uint points;
 
     //Networking
@@ -59,34 +59,21 @@ public class S_Snake_Player : MonoBehaviourPun
     
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Debug.Log(other.gameObject.transform.parent);
-        // Debug.Log(partsHolder.transform);
-        // Debug.Log(partsHolder);
         if (other.gameObject.CompareTag("Food"))
         {
-            other.gameObject.SetActive(false);
+            other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
             AddBodyPart();
         }
-        // Currently does not work correctly
-        // else if (!selfIntersect && other.gameObject.transform.parent == partsHolder.transform)
-        // {
-        //     // Destroy all parts and start over
-        //     bodyParts.Clear();
-        //     transform.position = new Vector3(0, 0);
-        // }
-        else if (other.gameObject.CompareTag(tag))
+        // Check self intersection
+        else if (!selfIntersect && other.gameObject.CompareTag(tag))
         {
-            // Check self intersection
-            if (!selfIntersect && other.gameObject.transform.parent == partsHolder.transform)
+            // Destroy all parts and start over
+            // Subtract point from self
+            bodyParts.Clear();
+            transform.position = new Vector3(0, 0);
+            if (points > 0)
             {
-                // Destroy all parts and start over
-                // Subtract point from self
-                bodyParts.Clear();
-                transform.position = new Vector3(0, 0);
-                if (points > 0)
-                {
-                    subPoints();
-                }
+                subPoints();
             }
         }
         //Check other snake collison
@@ -203,9 +190,6 @@ public class S_Snake_Player : MonoBehaviourPun
             // Take the postion of the current last body part
             body.transform.position = new Vector3(bodyParts[bodyParts.Count - 1].transform.position.x, bodyParts[bodyParts.Count - 1].transform.position.y);
         }
-        // body.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.snakeBodySprite;
-        // body.GetComponent<PolygonCollider2D>().isTrigger = true;
-        // body.tag = "Body";
         body.tag = this.tag;
         bodyParts.Add(body);
     }

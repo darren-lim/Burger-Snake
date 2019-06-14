@@ -15,6 +15,7 @@ public class S_LevelManager : MonoBehaviourPun
     private GameObject levelHolder;
     private List<GameObject> levelObjects;
     private int initialFood;
+<<<<<<< Updated upstream
     // IMPLEMENT WALLS LATER
     // private int initialWalls;
     
@@ -32,6 +33,8 @@ public class S_LevelManager : MonoBehaviourPun
             }
         }
     }
+=======
+>>>>>>> Stashed changes
 
     public S_LevelManager(int xSize, int ySize, int xMargin, int yMargin, int foodNum)
     {
@@ -66,12 +69,19 @@ public class S_LevelManager : MonoBehaviourPun
         {
             // Create a food object
             RandomGridPos();
+<<<<<<< Updated upstream
             GameObject foodObject = new GameObject(objTag+levelObjects.Count.ToString(), typeof(SpriteRenderer), typeof(CircleCollider2D));
             foodObject.transform.parent = levelHolder.transform;
             foodObject.transform.position = new Vector3(currentRandomPostion.x, currentRandomPostion.y);
             foodObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.foodSprite;
             foodObject.GetComponent<CircleCollider2D>().isTrigger = true;
             foodObject.tag = objTag;
+=======
+            GameObject foodObject = GameObject.Instantiate(GameAssets.instance.foodGenericPrefab);
+            foodObject.name = objTag+levelObjects.Count.ToString();
+            foodObject.transform.parent = levelHolder.transform;
+            foodObject.transform.position = new Vector3(currentRandomPostion.x, currentRandomPostion.y);
+>>>>>>> Stashed changes
             levelObjects.Add(foodObject);
         }
     }
