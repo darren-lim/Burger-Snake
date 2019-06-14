@@ -48,12 +48,14 @@ public class S_LevelManager
         {
             // Create a food object
             RandomGridPos();
-            GameObject foodObject = new GameObject(objTag+levelObjects.Count.ToString(), typeof(SpriteRenderer), typeof(CircleCollider2D));
+            GameObject foodObject = GameObject.Instantiate(GameAssets.instance.foodGenericPrefab);
+            foodObject.name = objTag+levelObjects.Count.ToString();
+            // GameObject foodObject = new GameObject(objTag+levelObjects.Count.ToString(), typeof(SpriteRenderer), typeof(CircleCollider2D));
             foodObject.transform.parent = levelHolder.transform;
             foodObject.transform.position = new Vector3(currentRandomPostion.x, currentRandomPostion.y);
-            foodObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.foodSprite;
-            foodObject.GetComponent<CircleCollider2D>().isTrigger = true;
-            foodObject.tag = objTag;
+            // foodObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.foodSprite;
+            // foodObject.GetComponent<CircleCollider2D>().isTrigger = true;
+            // foodObject.tag = objTag;
             levelObjects.Add(foodObject);
         }
     }

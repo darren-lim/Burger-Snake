@@ -34,6 +34,7 @@ public class GameAssets : MonoBehaviour
     public GameObject snakeBodyPrefab;
     public GameObject snakeTailPrefab;
     // Prefab Assets - Food
+    public GameObject foodGenericPrefab;
     public GameObject foodPattyPrefab;
     public GameObject foodLettucePrefab;
     public GameObject foodTomatoPrefab;
