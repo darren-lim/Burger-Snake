@@ -75,16 +75,18 @@ public class GameHandler : MonoBehaviourPun
                 refreshTimer -= refreshRate;
             }
             levelTimer -= Time.deltaTime;
-            timerText.text = "Time: " + ((int)levelTimer).ToString();
+            //timerText.text = "Time: " + ((int)levelTimer).ToString();
+            UpdateTimer(levelTimer);
             if (levelTimer <= 0.0f)
             {
                 levelEnd = true;
                 // RPC call for end level
             }
+            /*
             else
             {
                 timerText.text = "Time: " + ((int)levelTimer).ToString();
-            }
+            }*/
         }
     }
 
@@ -92,6 +94,12 @@ public class GameHandler : MonoBehaviourPun
     void RPC_RefreshLevel()
     {
         levelGrid.RefreshLevel();
+    }
+
+    [PunRPC]
+    void UpdateTimer(float lvTimer)
+    {
+        timerText.text = "Time: " + ((int)lvTimer).ToString();
     }
 
     public Vector2Int GetWindowSize()

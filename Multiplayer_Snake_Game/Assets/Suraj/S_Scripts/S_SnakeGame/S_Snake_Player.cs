@@ -28,6 +28,8 @@ public class S_Snake_Player : MonoBehaviourPun
     private float simulationRate = 0.2f;
     private float simulationTimer;
 
+    float timer = 3f;
+
     void Start()
     {
         PV = GetComponent<PhotonView>();
@@ -46,6 +48,14 @@ public class S_Snake_Player : MonoBehaviourPun
         points = 0;
     }
 
+    private void Update()
+    {
+        if (timer > 0)
+        {
+            timer--;
+        }
+    }
+
     void FixedUpdate()
     {
         simulationTimer += Time.deltaTime;
@@ -61,37 +71,38 @@ public class S_Snake_Player : MonoBehaviourPun
     {
         //if(PV.IsMine)
         //{
-            if (other.gameObject.CompareTag("Food"))
+        if (other.gameObject.CompareTag("Food"))
+        {
+            PV.RPC("SetFoodInactive", RpcTarget.All, other.gameObject.GetComponent<PhotonView>().ViewID);
+            //SetFoodInactive(other.gameObject);
+            //other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
+            AddBodyPart();
+        }
+        // //Check other snake collison
+        else if (!other.gameObject.CompareTag(tag) && timer <= 0)
+        {
+            // Destroy all parts and start over
+            // Add point to other, subtract point from self
+            if (bodyParts.Count > 0)
             {
-                PV.RPC("SetFoodInactive", RpcTarget.All, other.gameObject.GetComponent<PhotonView>().ViewID);
-                //SetFoodInactive(other.gameObject);
-                //other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
-                AddBodyPart();
+                timer = 3f;
+                RemoveBodyPart();
             }
-            // //Check other snake collison
-            else if (!other.gameObject.CompareTag(tag))
+            // // head to body Collided
+            // if (other.transform.parent != null)
+            // {
+            //     other.transform.parent.GetComponent<S_Snake_Player>().addPoints();
+            // }
+            // // head to head Collided
+            // else
+            // {
+            //     other.GetComponent<S_Snake_Player>().addPoints();
+            // }
+            if (points > 0)
             {
-                // Destroy all parts and start over
-                // Add point to other, subtract point from self
-                if (bodyParts.Count > 0)
-                {
-                    RemoveBodyPart();
-                }
-                // // head to body Collided
-                // if (other.transform.parent != null)
-                // {
-                //     other.transform.parent.GetComponent<S_Snake_Player>().addPoints();
-                // }
-                // // head to head Collided
-                // else
-                // {
-                //     other.GetComponent<S_Snake_Player>().addPoints();
-                // }
-                if (points > 0)
-                {
-                    PV.RPC("RPC_subPoints",RpcTarget.AllBuffered);
-                }
+                PV.RPC("RPC_subPoints",RpcTarget.AllBuffered);
             }
+        } 
         //}
     }
 
@@ -205,6 +216,7 @@ public class S_Snake_Player : MonoBehaviourPun
                                             Quaternion.identity,0);
         }
         body.transform.parent = partsHolder.transform;
+        body.AddComponent<PhotonView>();
         body.tag = this.tag;
         bodyParts.Add(body);
     }
@@ -215,7 +227,9 @@ public class S_Snake_Player : MonoBehaviourPun
         if (bodyParts.Count > 0)
         {
             //Destroy Last body
-            Destroy(bodyParts[bodyParts.Count-1]);
+            //PhotonNetwork.RemoveRPCs(bodyParts[bodyParts.Count - 1].GetComponent<PhotonView>().ViewID);
+            PhotonNetwork.Destroy(bodyParts[bodyParts.Count - 1]);
+            //Destroy(bodyParts[bodyParts.Count-1]);
             //Remove null pointer
             bodyParts.Remove(bodyParts[bodyParts.Count-1]);
         }
