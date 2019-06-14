@@ -31,5 +31,8 @@ MonoBehaviour:
   RpcList:
   - RPC_CreatePlayer
   - RPC_LoadedGameScene
+  - ReactivateObject
+  - SpawnObject
+  - OnTriggerEnter2D
   DisableAutoOpenWizard: 1
   ShowSettings: 0

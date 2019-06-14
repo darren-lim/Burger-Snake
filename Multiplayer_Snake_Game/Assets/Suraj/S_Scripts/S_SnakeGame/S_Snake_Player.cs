@@ -56,7 +56,7 @@ public class S_Snake_Player : MonoBehaviourPun
         }
         HandleInput();
     }
-
+    
     void OnTriggerEnter2D(Collider2D other)
     {
         // Debug.Log(other.gameObject.transform.parent);
