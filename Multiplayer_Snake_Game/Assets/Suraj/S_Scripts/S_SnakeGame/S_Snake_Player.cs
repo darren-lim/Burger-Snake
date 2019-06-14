@@ -59,15 +59,15 @@ public class S_Snake_Player : MonoBehaviourPun
     
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(PV.IsMine)
-        {
+        //if(PV.IsMine)
+        //{
             if (other.gameObject.CompareTag("Food"))
             {
-                PV.RPC("SetFoodInactive", RpcTarget.AllBufferedViaServer, other.gameObject.GetComponent<PhotonView>().ViewID);
+                PV.RPC("SetFoodInactive", RpcTarget.All, other.gameObject.GetComponent<PhotonView>().ViewID);
                 //SetFoodInactive(other.gameObject);
                 //other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
                 AddBodyPart();
-        }
+            }
             // //Check other snake collison
             else if (!other.gameObject.CompareTag(tag))
             {
@@ -92,7 +92,7 @@ public class S_Snake_Player : MonoBehaviourPun
                     PV.RPC("RPC_subPoints",RpcTarget.AllBuffered);
                 }
             }
-        }
+        //}
     }
 
     [PunRPC]

@@ -126,7 +126,7 @@ public class S_LevelManager : MonoBehaviourPun
         {
             if (lvlObj.activeSelf == false)
             {
-                pView.RPC("ReactivateObject", RpcTarget.AllBufferedViaServer, lvlObj.gameObject.GetComponent<PhotonView>().ViewID);
+                pView.RPC("ReactivateObject", RpcTarget.All, lvlObj.gameObject.GetComponent<PhotonView>().ViewID);
                 //ReactivateObject(lvlObj);
             }
         }
