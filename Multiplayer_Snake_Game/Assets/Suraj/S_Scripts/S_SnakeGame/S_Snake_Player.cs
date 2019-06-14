@@ -19,7 +19,7 @@ public class S_Snake_Player : MonoBehaviourPun
     private GameObject partsHolder;
     private List<GameObject> bodyParts;
     private bool selfIntersect;
-
+    [SerializeField]
     private uint points;
 
     //Networking
@@ -39,8 +39,8 @@ public class S_Snake_Player : MonoBehaviourPun
             snakeSpeed = 1;
         }
         partsHolder = new GameObject(this.name + "\'s Holder");
-        partsHolder.transform.position = new Vector3(0, 0);
-        partsHolder.transform.parent = this.transform.parent.transform;
+        partsHolder.transform.position = new Vector3(gridPos.x, gridPos.y);
+        // partsHolder.transform.parent = this.transform.parent.transform;
         moveDir = new Vector2Int(0, snakeSpeed);
         bodyParts = new List<GameObject>();
         points = 0;
@@ -56,52 +56,39 @@ public class S_Snake_Player : MonoBehaviourPun
         }
         HandleInput();
     }
-
+    
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Debug.Log(other.gameObject.transform.parent);
-        // Debug.Log(partsHolder.transform);
-        // Debug.Log(partsHolder);
         if (other.gameObject.CompareTag("Food"))
         {
-            other.gameObject.SetActive(false);
+            other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
             AddBodyPart();
         }
-        // Currently does not work correctly
-        else if (!selfIntersect && other.gameObject.transform.parent == partsHolder.transform)
-        {
-            // Destroy all parts and start over
-            bodyParts.Clear();
-            transform.position = new Vector3(0, 0);
-        }
-        else if (other.gameObject.CompareTag("Body"))
-        {
-            // Check self intersection
-            if (!selfIntersect && other.gameObject.transform.parent == partsHolder.transform)
-            {
-                // Destroy all parts and start over
-                // Subtract point from self
-                bodyParts.Clear();
-                transform.position = new Vector3(0, 0);
-                if (points > 0)
-                {
-                    subPoints();
-                }
-            }
-        }
-        //Check other snake collison
-        else
-        {
-            // Destroy all parts and start over
-            // Add point to other, subtract point from self
-            bodyParts.Clear();
-            transform.position = new Vector3(0, 0);
-            other.transform.parent.GetComponent<S_Snake_Player>().addPoints();
-            if (points > 0)
-            {
-                subPoints();
-            }
-        }
+        // Check self intersection
+        // else if (!selfIntersect && other.gameObject.CompareTag(tag))
+        // {
+        //     // Destroy all parts and start over
+        //     // Subtract point from self
+        //     bodyParts.Clear();
+        //     transform.position = new Vector3(0, 0);
+        //     if (points > 0)
+        //     {
+        //         subPoints();
+        //     }
+        // }
+        // //Check other snake collison
+        // else
+        // {
+        //     // Destroy all parts and start over
+        //     // Add point to other, subtract point from self
+        //     bodyParts.Clear();
+        //     transform.position = new Vector3(0, 0);
+        //     other.transform.parent.GetComponent<S_Snake_Player>().addPoints();
+        //     if (points > 0)
+        //     {
+        //         subPoints();
+        //     }
+        // }
     }
 
     private void HandleInput()
@@ -134,6 +121,8 @@ public class S_Snake_Player : MonoBehaviourPun
 
     public void HandleMovement()
     {
+        // Debug.Log("Grid Pos: " + gridPos.ToString());
+        // Debug.Log("Move Dir: " + moveDir.ToString());
         gridPos += moveDir;
         HandleOutOfBounds(levelSize.x, levelSize.y, wrapAround);
         for (int i = bodyParts.Count - 1; i > 0; --i)
@@ -201,9 +190,7 @@ public class S_Snake_Player : MonoBehaviourPun
             // Take the postion of the current last body part
             body.transform.position = new Vector3(bodyParts[bodyParts.Count - 1].transform.position.x, bodyParts[bodyParts.Count - 1].transform.position.y);
         }
-        // body.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.snakeBodySprite;
-        // body.GetComponent<PolygonCollider2D>().isTrigger = true;
-        // body.tag = "Body";
+        body.tag = this.tag;
         bodyParts.Add(body);
     }
 

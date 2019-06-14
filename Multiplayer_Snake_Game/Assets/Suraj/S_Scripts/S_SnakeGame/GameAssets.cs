@@ -34,13 +34,14 @@ public class GameAssets : MonoBehaviour
     public GameObject snakeBodyPrefab;
     public GameObject snakeTailPrefab;
     // Prefab Assets - Food
-    public GameObject foodPattyPrefab;
-    public GameObject foodLettucePrefab;
-    public GameObject foodTomatoPrefab;
-    public GameObject foodOnionsPrefab;
-    public GameObject foodPicklesPrefab;
-    // Prefab Assets - Power Up
-    public GameObject powerupKetchupPrefab;
-    public GameObject powerupMusturdPrefab;
-    public GameObject powerupHotSaucePrefab;
+    public GameObject foodGenericPrefab;
+    // public GameObject foodPattyPrefab;
+    // public GameObject foodLettucePrefab;
+    // public GameObject foodTomatoPrefab;
+    // public GameObject foodOnionsPrefab;
+    // public GameObject foodPicklesPrefab;
+    // // Prefab Assets - Power Up
+    // public GameObject powerupKetchupPrefab;
+    // public GameObject powerupMusturdPrefab;
+    // public GameObject powerupHotSaucePrefab;
 }
