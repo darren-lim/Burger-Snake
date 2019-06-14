@@ -25,6 +25,8 @@ public class NetworkPlayerController : MonoBehaviour
                                                     GameAssets.instance.SpawnPoints[playerID-1].position,
                                                     GameAssets.instance.SpawnPoints[playerID-1].rotation,
                                                     0);
+                myAvatar.GetComponent<S_Snake_Player>().tag = "Player_"+playerID.ToString();
+                myAvatar.GetComponent<S_Snake_Player>().setSelfIntersect(GameObject.FindGameObjectWithTag("Handler").GetComponent<GameHandler>().selfCollision);
                 myAvatar.GetComponent<S_Snake_Player>().SetSizeWrap(
                     GameObject.FindGameObjectWithTag("Handler").GetComponent<GameHandler>().GetWindowSize(),
                     GameObject.FindGameObjectWithTag("Handler").GetComponent<GameHandler>().GetWarp());

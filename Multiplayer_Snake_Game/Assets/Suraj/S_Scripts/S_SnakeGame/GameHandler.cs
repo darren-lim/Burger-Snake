@@ -25,7 +25,7 @@ public class GameHandler : MonoBehaviour
     // Options for gameplay - CAN BE EXPANDED LATER
     private int numberOfFood = 20;
     private bool wrapAround = true;
-    private bool selfCollision = true;
+    public bool selfCollision = true;
 
     // Network Stuff
     private GameObject roomCache;

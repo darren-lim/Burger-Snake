@@ -74,7 +74,7 @@ public class S_Snake_Player : MonoBehaviourPun
         //     bodyParts.Clear();
         //     transform.position = new Vector3(0, 0);
         // }
-        else if (other.gameObject.CompareTag("Body"))
+        else if (other.gameObject.CompareTag(tag))
         {
             // Check self intersection
             if (!selfIntersect && other.gameObject.transform.parent == partsHolder.transform)
@@ -134,8 +134,8 @@ public class S_Snake_Player : MonoBehaviourPun
 
     public void HandleMovement()
     {
-        Debug.Log("Grid Pos: " + gridPos.ToString());
-        Debug.Log("Move Dir: " + moveDir.ToString());
+        // Debug.Log("Grid Pos: " + gridPos.ToString());
+        // Debug.Log("Move Dir: " + moveDir.ToString());
         gridPos += moveDir;
         HandleOutOfBounds(levelSize.x, levelSize.y, wrapAround);
         for (int i = bodyParts.Count - 1; i > 0; --i)
@@ -206,6 +206,7 @@ public class S_Snake_Player : MonoBehaviourPun
         // body.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.snakeBodySprite;
         // body.GetComponent<PolygonCollider2D>().isTrigger = true;
         // body.tag = "Body";
+        body.tag = this.tag;
         bodyParts.Add(body);
     }
 
