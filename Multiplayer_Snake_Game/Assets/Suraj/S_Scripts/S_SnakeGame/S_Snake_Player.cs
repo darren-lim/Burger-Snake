@@ -215,7 +215,7 @@ public class S_Snake_Player : MonoBehaviourPun
         else
         {
             // Take the postion of the current last body part
-            body = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Snake_Body"),
+            body = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "BodyPlayer"+playerID.ToString()),
                                             new Vector3(bodyParts[bodyParts.Count - 1].transform.position.x, bodyParts[bodyParts.Count - 1].transform.position.y),
                                             Quaternion.identity, 0);
         }

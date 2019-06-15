@@ -57,7 +57,7 @@ public class GameHandler : MonoBehaviourPun
         }
         if(levelTimer == 0)
         {
-            levelTimer = 20.0f; //Two minute rounds
+            levelTimer = 120.0f; //Two minute rounds
         }
         levelEnd = false;
         timerText.text = "Time: " + ((int)levelTimer).ToString();
