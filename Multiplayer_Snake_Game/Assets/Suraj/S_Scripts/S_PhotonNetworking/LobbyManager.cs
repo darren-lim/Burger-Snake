@@ -9,6 +9,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public static LobbyManager lobby;
     public GameObject randomRoomButton;
     public GameObject cancelButton;
+    public GameObject StartButton;
 
 
     private void Awake()
@@ -24,6 +25,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         // Connects to Master photon server
         PhotonNetwork.ConnectUsingSettings();
+        StartButton.SetActive(false);
     }
 
     public override void OnConnectedToMaster()
@@ -38,6 +40,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         randomRoomButton.SetActive(false);
         cancelButton.SetActive(true);
         PhotonNetwork.JoinRandomRoom();
+        StartButton.SetActive(true);
     }
 
     // public override void OnJoinedRoom()
@@ -69,6 +72,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         randomRoomButton.SetActive(true);
         cancelButton.SetActive(false);
+        StartButton.SetActive(false);
         PhotonNetwork.LeaveRoom();
     }
 

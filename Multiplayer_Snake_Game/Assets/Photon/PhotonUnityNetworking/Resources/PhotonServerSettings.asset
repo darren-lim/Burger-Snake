@@ -44,6 +44,16 @@ MonoBehaviour:
   - RPC_LevelTimer
   - UpdateTimer
   - LoadScene
+  - RestartGame
+  - StartGameButtonClicked
+  - StartGame
+  - SetLobbyInactive
+  - SetStarting
+  - SetReadyPlayers
+  - AddReadyPlayers
+  - setCountdown
+  - ResetReadyPlayers
+  - LoadMulti
   - RPC_textInitialize
   DisableAutoOpenWizard: 1
   ShowSettings: 0

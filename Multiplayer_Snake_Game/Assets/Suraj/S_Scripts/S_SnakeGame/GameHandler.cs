@@ -137,29 +137,31 @@ public class GameHandler : MonoBehaviourPun
     }
 
     //RPC call for round end
-
+    [PunRPC]
     void RestartGame()
     {
         StartCoroutine(OnRestart());
     }
-    
     IEnumerator OnRestart()
     {
         //add who won
-        PV.RPC("LoadScene", RpcTarget.All);
+        yield return new WaitForSeconds(3);
         //PhotonNetwork.DestroyAll();
         //PhotonNetwork.LoadLevel(2);
-        yield return null;
         /*
         PhotonNetwork.DestroyAll();
         Destroy(GameObject.Find("LobbyController"));
         Destroy(GameObject.Find("RoomController"));
         SceneManager.LoadScene(MultiplayerSettings.multiplayerSetting.menuScene);*/
-    }
-    [PunRPC]
-    void LoadScene()
-    {
-        PhotonNetwork.DestroyAll();
-        PhotonNetwork.LoadLevel(MultiplayerSettings.multiplayerSetting.multiplayerScene);
+
+        PhotonNetwork.LeaveRoom();
+        while (PhotonNetwork.InRoom)
+        {
+            yield return null;
+        }
+        PhotonNetwork.Disconnect();
+        Destroy(GameObject.Find("LobbyController"));
+        Destroy(GameObject.Find("RoomController"));
+        SceneManager.LoadScene(MultiplayerSettings.multiplayerSetting.MainMenu);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class BackToMenu : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class BackToMenu : MonoBehaviour
 
     public void OnBackClick()
     {
+        PhotonNetwork.Disconnect();
         SceneManager.LoadScene(menuScene);
         foreach(GameObject obj in destroyObjects)
         {

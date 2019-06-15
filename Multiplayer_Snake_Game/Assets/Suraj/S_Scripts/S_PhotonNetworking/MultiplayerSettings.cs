@@ -10,6 +10,7 @@ public class MultiplayerSettings : MonoBehaviour
     public int menuScene = 1;
     public int MainMenu = 0;
     public int multiplayerScene = 2;
+    public int emptyScene = 3;
 
     private void Awake() 
     {
