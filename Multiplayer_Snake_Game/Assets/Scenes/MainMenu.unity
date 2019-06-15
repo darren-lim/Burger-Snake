@@ -646,8 +646,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -100, y: -101}
-  m_SizeDelta: {x: 600, y: 202}
+  m_AnchoredPosition: {x: -100, y: -117.9}
+  m_SizeDelta: {x: 600, y: 235.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &584622572
 MonoBehaviour:
@@ -673,11 +673,14 @@ MonoBehaviour:
 
     1. WASD for movement
 
-    2. Get food to get points
+    2. You are allowed to collide against youself and will wrap around the game board
+    when at an edge.
 
-    3. Lose point by running into other players
+    3. You increase your tail by eating food
 
-    4. Get as many points before time runs out to win
+    4. You decrease your tail by running into other players
+
+    5. Get as many points before time runs out to win
 
 '
   m_isRightToLeft: 0
@@ -707,14 +710,14 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 258
+  m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -748,12 +751,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 584622572}
-    characterCount: 147
+    characterCount: 273
     spriteCount: 0
-    spaceCount: 30
-    wordCount: 30
+    spaceCount: 53
+    wordCount: 53
     linkCount: 0
-    lineCount: 6
+    lineCount: 7
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1962,8 +1965,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -99.99994, y: -326.14996}
-  m_SizeDelta: {x: 600, y: 248.3}
+  m_AnchoredPosition: {x: -96.9, y: -349.1}
+  m_SizeDelta: {x: 606.1, y: 202.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1860937881
 MonoBehaviour:
@@ -2022,8 +2025,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2068,7 +2071,7 @@ MonoBehaviour:
     spaceCount: 49
     wordCount: 50
     linkCount: 0
-    lineCount: 8
+    lineCount: 7
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
