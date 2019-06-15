@@ -75,7 +75,7 @@ public class S_Snake_Player : MonoBehaviourPun
             AddBodyPart();
         }
         // //Check other snake collison
-        else if (!other.gameObject.CompareTag(tag))
+        else if (!other.gameObject.CompareTag(tag) && timer<=0)
         {
             timer = 3f;
             RemoveBodyPart();

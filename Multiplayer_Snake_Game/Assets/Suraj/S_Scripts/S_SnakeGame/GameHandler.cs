@@ -130,10 +130,12 @@ public class GameHandler : MonoBehaviourPun
 
     IEnumerator DisconnectAndLoad()
     {
-        //PhotonNetwork.Disconnect();
         PhotonNetwork.LeaveRoom();
         while (PhotonNetwork.InRoom)
             yield return null;
+        PhotonNetwork.Disconnect();
+        Destroy(GameObject.Find("LobbyController"));
+        Destroy(GameObject.Find("RoomController"));
         SceneManager.LoadScene(MultiplayerSettings.multiplayerSetting.mainMenu);
     }
 }
