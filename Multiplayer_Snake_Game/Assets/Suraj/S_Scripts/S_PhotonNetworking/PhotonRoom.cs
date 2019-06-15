@@ -267,14 +267,17 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         playerInGame++;
         if(playerInGame == PhotonNetwork.PlayerList.Length)
         {
-            PV.RPC("RPC_CreatePlayer", RpcTarget.All);
+            PV.RPC("RPC_CreatePlayer", RpcTarget.All,playerInGame);
         }
     }
 
     [PunRPC]
-    private void RPC_CreatePlayer()
+    private void RPC_CreatePlayer(int playerID)
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonNetworkPlayer"),transform.position,Quaternion.identity, 0);   
+        // GameObject go = 
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonNetworkPlayer_"+myNumberInRoom.ToString()),
+                                                  transform.position,Quaternion.identity, 0);
+        // go.tag = "Player_" + myNumberInRoom.ToString();
     }
 
     [PunRPC]

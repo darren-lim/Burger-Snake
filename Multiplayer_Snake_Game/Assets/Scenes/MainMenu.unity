@@ -1993,7 +1993,8 @@ MonoBehaviour:
 
     3. Network may create a new room if region of the other player not found.
 
-    4. There is a disconnect button in game.'
+    4. There is a disconnect button in game, use it at the end if you don''t auto
+    disconnect.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2062,12 +2063,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1860937881}
-    characterCount: 222
+    characterCount: 270
     spriteCount: 0
-    spaceCount: 39
-    wordCount: 40
+    spaceCount: 49
+    wordCount: 50
     linkCount: 0
-    lineCount: 7
+    lineCount: 8
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
