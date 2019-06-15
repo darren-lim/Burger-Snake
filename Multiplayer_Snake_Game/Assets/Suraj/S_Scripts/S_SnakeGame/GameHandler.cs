@@ -75,10 +75,7 @@ public class GameHandler : MonoBehaviourPun
                 PV.RPC("RPC_RefreshLevel", RpcTarget.AllBuffered);
                 refreshTimer -= refreshRate;
             }
-            levelTimer -= Time.deltaTime;
-            //timerText.text = "Time: " + ((int)levelTimer).ToString();
-            PV.RPC("UpdateTimer", RpcTarget.All, levelTimer);
-            //UpdateTimer(levelTimer);
+            PV.RPC("RPC_LevelTimer", RpcTarget.All);
             if (levelTimer <= 0.0f)
             {
                 levelEnd = true;
@@ -120,9 +117,6 @@ public class GameHandler : MonoBehaviourPun
         timerText.text = "Time: " + ((int)levelTimer).ToString();
     }
 
-    //RPC call for round end
-
-
     public void DisconnectPlayer()
     {
         StartCoroutine(DisconnectAndLoad());
@@ -132,10 +126,25 @@ public class GameHandler : MonoBehaviourPun
     {
         PhotonNetwork.LeaveRoom();
         while (PhotonNetwork.InRoom)
+        {
             yield return null;
+        }
         PhotonNetwork.Disconnect();
         Destroy(GameObject.Find("LobbyController"));
         Destroy(GameObject.Find("RoomController"));
-        SceneManager.LoadScene(MultiplayerSettings.multiplayerSetting.mainMenu);
+        SceneManager.LoadScene(MultiplayerSettings.multiplayerSetting.MainMenu);
     }
+
+    //RPC call for round end
+    /*
+[PunRPC]
+void RestartGame()
+{
+    foreach(Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+    {
+        PhotonNetwork.DestroyPlayerObjects(player.UserId);
+    }
+    PhotonNetwork.DestroyPlayerObjects(PhotonNetwork..ID);
+    PhotonNetwork.LoadLevel(1);
+}*/
 }

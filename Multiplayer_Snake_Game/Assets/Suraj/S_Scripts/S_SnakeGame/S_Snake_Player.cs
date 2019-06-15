@@ -66,41 +66,56 @@ public class S_Snake_Player : MonoBehaviourPun
         }
         HandleInput();
     }
-    
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Food"))
         {
-            other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
+            PV.RPC("SetFoodInactive", RpcTarget.All, other.gameObject.GetComponent<PhotonView>().ViewID);
+            //SetFoodInactive(other.gameObject);
+            //other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
             AddBodyPart();
         }
         // //Check other snake collison
-        else if (!other.gameObject.CompareTag(tag) && timer<=0)
+        else if (!other.gameObject.CompareTag(tag) && timer <= 0)
         {
-            timer = 3f;
-            RemoveBodyPart();
+            // Destroy all parts and start over
+            // Add point to other, subtract point from self
+            if (bodyParts.Count > 0)
+            {
+                timer = 3f;
+                RemoveBodyPart();
+            }
+            // // head to body Collided
+            // if (other.transform.parent != null)
+            // {
+            //     other.transform.parent.GetComponent<S_Snake_Player>().addPoints();
+            // }
+            // // head to head Collided
+            // else
+            // {
+            //     other.GetComponent<S_Snake_Player>().addPoints();
+            // }
+            if (points > 0)
+            {
+                PV.RPC("RPC_subPoints", RpcTarget.AllBuffered);
+            }
         }
-        // // head to body Collided
-        // if (other.transform.parent != null)
-        // {
-        //     other.transform.parent.GetComponent<S_Snake_Player>().addPoints();
-        // }
-        // // head to head Collided
-        // else
-        // {
-        //     other.GetComponent<S_Snake_Player>().addPoints();
-        // }
-        if (points > 0)
-        {
-            PV.RPC("RPC_subPoints",RpcTarget.AllBuffered);
-        }
+    }
+
+    [PunRPC]
+    public void SetFoodInactive(int food)
+    {
+        PhotonView Disable = PhotonView.Find(food);
+        Disable.transform.gameObject.SetActive(false);
     }
 
     private void HandleInput()
     {
         // Handles input of the user
         // MUST take only local inputs
-        if(PV.IsMine){
+        if (PV.IsMine)
+        {
             if (Input.GetKeyDown(KeyCode.W) && moveDir.y == 0)
             {
                 moveDir.x = 0;
@@ -189,25 +204,24 @@ public class S_Snake_Player : MonoBehaviourPun
             // Take the postion of the head
             body = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Snake_Body"),
                                             new Vector3(this.transform.position.x, this.transform.position.y),
-                                            Quaternion.identity,0);
+                                            Quaternion.identity, 0);
         }
         else
         {
             // Take the postion of the current last body part
             body = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Snake_Body"),
                                             new Vector3(bodyParts[bodyParts.Count - 1].transform.position.x, bodyParts[bodyParts.Count - 1].transform.position.y),
-                                            Quaternion.identity,0);
+                                            Quaternion.identity, 0);
         }
         body.transform.parent = partsHolder.transform;
         body.AddComponent<PhotonView>();
         body.tag = this.tag;
         bodyParts.Add(body);
-        //PV.RPC("RPC_addPoints", RpcTarget.All, 1f);
     }
 
     void RemoveBodyPart()
     {
-        
+
         if (bodyParts.Count > 0)
         {
             //Destroy Last body
@@ -215,7 +229,7 @@ public class S_Snake_Player : MonoBehaviourPun
             PhotonNetwork.Destroy(bodyParts[bodyParts.Count - 1]);
             //Destroy(bodyParts[bodyParts.Count-1]);
             //Remove null pointer
-            bodyParts.Remove(bodyParts[bodyParts.Count-1]);
+            bodyParts.Remove(bodyParts[bodyParts.Count - 1]);
         }
     }
 
