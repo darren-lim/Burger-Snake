@@ -74,19 +74,16 @@ public class GameHandler : MonoBehaviourPun
                 PV.RPC("RPC_RefreshLevel", RpcTarget.AllBuffered);
                 refreshTimer -= refreshRate;
             }
-            levelTimer -= Time.deltaTime;
-            //timerText.text = "Time: " + ((int)levelTimer).ToString();
-            UpdateTimer(levelTimer);
+            PV.RPC("RPC_LevelTimer", RpcTarget.All);
             if (levelTimer <= 0.0f)
             {
                 levelEnd = true;
                 // RPC call for end level
             }
-            /*
-            else
-            {
-                timerText.text = "Time: " + ((int)levelTimer).ToString();
-            }*/
+            // else
+            // {
+            //     timerText.text = "Time: " + ((int)levelTimer).ToString();
+            // }
         }
     }
 
@@ -110,6 +107,13 @@ public class GameHandler : MonoBehaviourPun
     public bool GetWarp()
     {
         return wrapAround;
+    }
+
+    [PunRPC]
+    void RPC_LevelTimer()
+    {
+        levelTimer -= Time.deltaTime;
+        timerText.text = "Time: " + ((int)levelTimer).ToString();
     }
 
     //RPC call for round end

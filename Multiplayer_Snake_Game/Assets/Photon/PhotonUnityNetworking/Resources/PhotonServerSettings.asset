@@ -41,5 +41,7 @@ MonoBehaviour:
   - RPC_subPoints
   - AddBodyPart
   - SetFoodInactive
+  - RPC_LevelTimer
+  - UpdateTimer
   DisableAutoOpenWizard: 1
   ShowSettings: 0

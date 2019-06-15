@@ -69,21 +69,15 @@ public class S_Snake_Player : MonoBehaviourPun
     
     void OnTriggerEnter2D(Collider2D other)
     {
-        //if(PV.IsMine)
-        //{
-        if (other.gameObject.CompareTag("Food"))
+        if(PV.IsMine)
         {
-            PV.RPC("SetFoodInactive", RpcTarget.All, other.gameObject.GetComponent<PhotonView>().ViewID);
-            //SetFoodInactive(other.gameObject);
-            //other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
-            AddBodyPart();
-        }
-        // //Check other snake collison
-        else if (!other.gameObject.CompareTag(tag) && timer <= 0)
-        {
-            // Destroy all parts and start over
-            // Add point to other, subtract point from self
-            if (bodyParts.Count > 0)
+            if (other.gameObject.CompareTag("Food"))
+            {
+                other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
+                AddBodyPart();
+            }
+            // //Check other snake collison
+            else if (!other.gameObject.CompareTag(tag))
             {
                 timer = 3f;
                 RemoveBodyPart();
@@ -104,13 +98,6 @@ public class S_Snake_Player : MonoBehaviourPun
             }
         } 
         //}
-    }
-
-    [PunRPC]
-    public void SetFoodInactive(int food)
-    {
-        PhotonView Disable = PhotonView.Find(food);
-        Disable.transform.gameObject.SetActive(false);
     }
 
     private void HandleInput()
