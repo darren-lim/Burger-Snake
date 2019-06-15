@@ -102,20 +102,6 @@ public class S_LevelManager : MonoBehaviourPun
             foodObject.name = objTag + levelObjects.Count.ToString();
             foodObject.transform.parent = levelHolder.transform;
             levelObjects.Add(foodObject);
-            /*
-            RandomGridPos();
-            // GameObject foodObject = new GameObject(objTag+levelObjects.Count.ToString(), typeof(SpriteRenderer), typeof(CircleCollider2D));
-            // foodObject.transform.parent = levelHolder.transform;
-            // foodObject.transform.position = new Vector3(currentRandomPostion.x, currentRandomPostion.y);
-            // foodObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.foodSprite;
-            // foodObject.GetComponent<CircleCollider2D>().isTrigger = true;
-            GameObject foodObject = GameObject.Instantiate(GameAssets.instance.foodGenericPrefab);
-            foodObject.tag = objTag;
-            foodObject.name = objTag+levelObjects.Count.ToString();
-            foodObject.transform.parent = levelHolder.transform;
-            foodObject.transform.position = new Vector3(currentRandomPostion.x, currentRandomPostion.y);
-            levelObjects.Add(foodObject);
-            */
         }
     }
     [PunRPC]
@@ -146,18 +132,3 @@ public class S_LevelManager : MonoBehaviourPun
 
 
 }
-
-            // GameObject foodObject = PhotonNetwork.Instantiate("Food", new Vector3(currentRandomPostion.x, currentRandomPostion.y, 0), Quaternion.identity, 0);
-            
-            // //GameObject foodObject = new GameObject(objTag+levelObjects.Count.ToString(), typeof(SpriteRenderer), typeof(CircleCollider2D), typeof(PhotonView), typeof(PhotonTransformView));
-            // //foodObject.transform.position = new Vector3(currentRandomPostion.x, currentRandomPostion.y);
-            // //foodObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.foodSprite;
-            // foodObject.GetComponent<CircleCollider2D>().isTrigger = true;
-            // /*
-            // PhotonTransformView view = foodObject.GetComponent<PhotonTransformView>();
-            // view.m_SynchronizePosition = true;
-            // PhotonView pview = foodObject.GetComponent<PhotonView>();
-            // pview.ObservedComponents = new List<Component>();
-            // pview.ObservedComponents.Add(view);
-            // */
-            // foodObject.tag = objTag;

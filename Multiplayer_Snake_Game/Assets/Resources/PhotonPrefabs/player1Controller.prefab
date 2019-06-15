@@ -147,6 +147,7 @@ MonoBehaviour:
   points: 0
   myScoreboard: {fileID: 0}
   playerID: 4
+  gHand: {fileID: 0}
 --- !u!114 &-7114700396661369149
 MonoBehaviour:
   m_ObjectHideFlags: 0

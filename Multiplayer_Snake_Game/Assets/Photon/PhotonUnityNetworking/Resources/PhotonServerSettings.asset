@@ -56,5 +56,7 @@ MonoBehaviour:
   - LoadMulti
   - RPC_textInitialize
   - RealoadScene
+  - uScore
+  - ShowText
   DisableAutoOpenWizard: 1
   ShowSettings: 0

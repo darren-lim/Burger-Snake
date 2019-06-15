@@ -26,6 +26,10 @@ public class GameHandler : MonoBehaviourPun
     public Text player3Points;
     public Text player4Points;
 
+    public Text Winner;
+    
+    public Dictionary<string,int> playerScores = new Dictionary<string,int>();
+
     // Options for gameplay - CAN BE EXPANDED LATER
     private int numberOfFood = 20;
     private bool wrapAround = true;
@@ -57,10 +61,24 @@ public class GameHandler : MonoBehaviourPun
         }
         if (levelTimer == 0)
         {
-            levelTimer = 120.0f; //Two minute rounds
+            levelTimer = 20.0f; //Two minute rounds
         }
         levelEnd = false;
         timerText.text = "Time: " + ((int)levelTimer).ToString();
+        playerScores.Add("player1Controller(Clone)", 0);
+        playerScores.Add("player2Controller(Clone)", 0);
+        playerScores.Add("player3Controller(Clone)", 0);
+        playerScores.Add("player4Controller(Clone)", 0);
+        try
+        {
+            player1Points.text = "Player 1 Score: " + playerScores["player1Controller(Clone)"].ToString();
+            player2Points.text = "Player 2 Score: " + playerScores["player2Controller(Clone)"].ToString();
+            player3Points.text = "Player 3 Score: " + playerScores["player3Controller(Clone)"].ToString();
+            player4Points.text = "Player 4 Score: " + playerScores["player4Controller(Clone)"].ToString();
+        }
+        catch { };
+        //Debug.Log(playerScores.Keys);
+        Winner.enabled = false;
     }
 
     void FixedUpdate()
@@ -86,6 +104,28 @@ public class GameHandler : MonoBehaviourPun
             // {
             //     timerText.text = "Time: " + ((int)levelTimer).ToString();
             // }
+        }
+    }
+
+    public void UpdateScore(string name, int score)
+    {
+        PV.RPC("uScore",RpcTarget.All,name,score);
+    }
+
+    [PunRPC]
+    void uScore(string name, int score)
+    {
+        playerScores[name] = score;
+        try
+        {
+            player1Points.text = "Player 1 Score: " + playerScores["player1Controller(Clone)"].ToString();
+            player2Points.text = "Player 2 Score: " + playerScores["player2Controller(Clone)"].ToString();
+            player3Points.text = "Player 3 Score: " + playerScores["player3Controller(Clone)"].ToString();
+            player4Points.text = "Player 4 Score: " + playerScores["player4Controller(Clone)"].ToString();
+        }
+        catch
+        {
+            Debug.Log("NotFound");
         }
     }
 
@@ -145,7 +185,36 @@ public class GameHandler : MonoBehaviourPun
     IEnumerator OnRestart()
     {
         //add who won
-        yield return new WaitForSeconds(3);
+        string playerstr = "player1Controller(Clone)";
+        int playerscore = 0;
+        foreach (var entry in playerScores)
+        {
+            if (playerscore <= entry.Value)
+            {
+                playerscore = entry.Value;
+                playerstr = entry.Key;
+            }
+        }
+        if (playerstr == "player1Controller(Clone)")
+        {
+            playerstr = "Player 1 Wins";
+        }
+        else if (playerstr == "player2Controller(Clone)")
+        {
+            playerstr = "Player 2 Wins";
+        }
+        else if (playerstr == "player3Controller(Clone)")
+        {
+            playerstr = "Player 3 Wins";
+        }
+        else if (playerstr == "player4Controller(Clone)")
+        {
+            playerstr = "Player 4 Wins";
+        }
+        Winner.text = playerstr;
+        Winner.enabled = true;
+        PV.RPC("ShowText", RpcTarget.All, playerstr);
+        yield return new WaitForSeconds(4);
         //PhotonNetwork.DestroyAll();
         //PhotonNetwork.LoadLevel(2);
         /*
@@ -163,5 +232,12 @@ public class GameHandler : MonoBehaviourPun
         Destroy(GameObject.Find("LobbyController"));
         Destroy(GameObject.Find("RoomController"));
         SceneManager.LoadScene(MultiplayerSettings.multiplayerSetting.MainMenu);
+    }
+
+    [PunRPC]
+    void ShowText(string text)
+    {
+        Winner.text = text;
+        Winner.enabled = true;
     }
 }

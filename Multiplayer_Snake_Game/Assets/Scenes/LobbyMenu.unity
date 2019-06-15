@@ -805,7 +805,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Must have 2 or more players to start. Only host can start the game.
+  m_Text: Must have 2 or more players to start
 --- !u!222 &1204950604
 CanvasRenderer:
   m_ObjectHideFlags: 0

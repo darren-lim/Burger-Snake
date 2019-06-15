@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class S_Snake_Player : MonoBehaviourPun
 {
-
+    //player1Controller(Clone)
     // Grid postions on game area
     private Vector2Int gridPos;
     private Vector2Int levelSize;
@@ -21,7 +21,7 @@ public class S_Snake_Player : MonoBehaviourPun
     private GameObject partsHolder;
     public List<GameObject> bodyParts;
     private bool selfIntersect;
-    public uint points;
+    public int points;
 
     //Networking
     private PhotonView PV;
@@ -32,6 +32,7 @@ public class S_Snake_Player : MonoBehaviourPun
     float timer = 3f;
     public Text myScoreboard;
     public int playerID = 4;
+    public GameHandler gHand;
 
     void Start()
     {
@@ -50,6 +51,7 @@ public class S_Snake_Player : MonoBehaviourPun
         moveDir = new Vector2Int(0, snakeSpeed);
         bodyParts = new List<GameObject>();
         points = 0;
+        gHand = GameObject.Find("GameHandler").GetComponent<GameHandler>();
     }
 
     private void Update()
@@ -79,7 +81,8 @@ public class S_Snake_Player : MonoBehaviourPun
             //SetFoodInactive(other.gameObject);
             //other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
             AddBodyPart();
-            PV.RPC("RPC_addPoints", RpcTarget.All,1.0f);
+            //PV.RPC("RPC_addPoints", RpcTarget.All,1.0f);
+            RPC_addPoints();
         }
         // //Check other snake collison
         else if (!other.gameObject.CompareTag(tag) && timer <= 0)
@@ -103,7 +106,8 @@ public class S_Snake_Player : MonoBehaviourPun
             // }
             if (points > 0)
             {
-                PV.RPC("RPC_subPoints", RpcTarget.All,1.0f);
+                //PV.RPC("RPC_subPoints", RpcTarget.All,1.0f);
+                RPC_subPoints();
             }
         }
     }
@@ -250,19 +254,21 @@ public class S_Snake_Player : MonoBehaviourPun
     }
 
     // Add a point with multiplier
-    [PunRPC]
+    //[PunRPC]
     void RPC_addPoints(float mult = 1.0f)
     {
-        points += (uint)(1 * mult);
-        myScoreboard.text = "Player "+playerID.ToString() + ": " + points.ToString();
+        points += (int)(1 * mult);
+        sendScore();
+        //myScoreboard.text = "Player "+playerID.ToString() + ": " + points.ToString();
     }
 
     // Subtract a point with multiplier
-    [PunRPC]
+    //[PunRPC]
     void RPC_subPoints(float mult = 1.0f)
     {
-        points -= (uint)(1 * mult);
-        myScoreboard.text = "Player "+playerID.ToString() + ": " + points.ToString();
+        points -= (int)(1 * mult);
+        sendScore();
+        //myScoreboard.text = "Player "+playerID.ToString() + ": " + points.ToString();
     }
 
     [PunRPC]
@@ -275,5 +281,10 @@ public class S_Snake_Player : MonoBehaviourPun
     {
         levelSize = size;
         wrapAround = wrap;
+    }
+
+    void sendScore()
+    {
+        gHand.UpdateScore(this.gameObject.name, points);
     }
 }
