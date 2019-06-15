@@ -34,5 +34,29 @@ MonoBehaviour:
   - ReactivateObject
   - SpawnObject
   - OnTriggerEnter2D
+  - RPC_AddBodyPart
+  - RPC_addPoints
+  - RPC_RefreshLevel
+  - RPC_RemoveBodyPart
+  - RPC_subPoints
+  - AddBodyPart
+  - SetFoodInactive
+  - RPC_LevelTimer
+  - UpdateTimer
+  - LoadScene
+  - RestartGame
+  - StartGameButtonClicked
+  - StartGame
+  - SetLobbyInactive
+  - SetStarting
+  - SetReadyPlayers
+  - AddReadyPlayers
+  - setCountdown
+  - ResetReadyPlayers
+  - LoadMulti
+  - RPC_textInitialize
+  - RealoadScene
+  - uScore
+  - ShowText
   DisableAutoOpenWizard: 1
   ShowSettings: 0

@@ -15,6 +15,8 @@ public class S_LevelManager : MonoBehaviourPun
     private GameObject levelHolder;
     private List<GameObject> levelObjects;
     private int initialFood;
+
+    PhotonView pView;
     // IMPLEMENT WALLS LATER
     // private int initialWalls;
     
@@ -32,7 +34,7 @@ public class S_LevelManager : MonoBehaviourPun
             }
         }
     }
-
+    /*
     public S_LevelManager(int xSize, int ySize, int xMargin, int yMargin, int foodNum)
     {
         this.levelSize = new Vector2Int(xSize,ySize);
@@ -45,7 +47,23 @@ public class S_LevelManager : MonoBehaviourPun
         {
             SpawnObject("Food");
         }
-    }   
+        pView = gameObject.AddComponent(typeof(PhotonView)) as PhotonView;
+    }   */
+
+    public void StartManager(int xSize, int ySize, int xMargin, int yMargin, int foodNum)
+    {
+        this.levelSize = new Vector2Int(xSize, ySize);
+        this.levelMargin = new Vector2Int(xMargin, yMargin);
+        this.initialFood = foodNum;
+        this.currentRandomPostion = new Vector2Int(0, 0);
+        levelHolder = GameObject.FindGameObjectWithTag("Holder");
+        levelObjects = new List<GameObject>();
+        for (int i = 0; i < initialFood; ++i)
+        {
+            SpawnObject("Food");
+        }
+        pView = this.GetComponent<PhotonView>();
+    }
 
     private void RandomGridPos(bool randomizeX = true, bool randomizeY = true)
     {
@@ -62,59 +80,55 @@ public class S_LevelManager : MonoBehaviourPun
     private void SpawnObject(string objTag)
     {
         // This is where an object is initally created
-        if(objTag == "Food")
+        if(objTag == "Food" && PhotonNetwork.IsMasterClient)
         {
             // Create a food object
             RandomGridPos();
-            // GameObject foodObject = new GameObject(objTag+levelObjects.Count.ToString(), typeof(SpriteRenderer), typeof(CircleCollider2D));
-            // foodObject.transform.parent = levelHolder.transform;
-            // foodObject.transform.position = new Vector3(currentRandomPostion.x, currentRandomPostion.y);
-            // foodObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.foodSprite;
-            // foodObject.GetComponent<CircleCollider2D>().isTrigger = true;
-            GameObject foodObject = GameObject.Instantiate(GameAssets.instance.foodGenericPrefab);
+            string prefab = Random.Range(1, 4).ToString();
+            if (prefab == "1")
+            {
+                prefab = "Lettuce";
+            } else if (prefab == "2")
+            {
+                prefab = "Patty";
+            } else
+            {
+                prefab = "Tomato";
+            }
+
+            GameObject foodObject = PhotonNetwork.Instantiate(prefab, new Vector3(currentRandomPostion.x, currentRandomPostion.y, 0), Quaternion.identity, 0);
+
             foodObject.tag = objTag;
-            foodObject.name = objTag+levelObjects.Count.ToString();
+            foodObject.name = objTag + levelObjects.Count.ToString();
             foodObject.transform.parent = levelHolder.transform;
-            foodObject.transform.position = new Vector3(currentRandomPostion.x, currentRandomPostion.y);
             levelObjects.Add(foodObject);
         }
     }
     [PunRPC]
-    private void ReactivateObject(GameObject levelObject)
+    public void ReactivateObject(int levelObject)
     {
         // This is where a level object can change
         // Most often, the level object will just be reactiviated in a random position
         RandomGridPos();
-        levelObject.transform.position = new Vector3(currentRandomPostion.x, currentRandomPostion.y);
-        levelObject.SetActive(true);
+        PhotonView Enable = PhotonView.Find(levelObject);
+        Enable.transform.position = new Vector3(currentRandomPostion.x, currentRandomPostion.y);
+        Enable.transform.gameObject.SetActive(true);
     }
 
     public void RefreshLevel()
     {
         // Instead of deleting and remaking objects, objects are hidden then reactivated
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         foreach(GameObject lvlObj in levelObjects)
         {
             if (lvlObj.activeSelf == false)
             {
-                ReactivateObject(lvlObj);
+                pView.RPC("ReactivateObject", RpcTarget.All, lvlObj.gameObject.GetComponent<PhotonView>().ViewID);
+                //ReactivateObject(lvlObj);
             }
         }
     }
 
 
 }
-
-            // GameObject foodObject = PhotonNetwork.Instantiate("Food", new Vector3(currentRandomPostion.x, currentRandomPostion.y, 0), Quaternion.identity, 0);
-            
-            // //GameObject foodObject = new GameObject(objTag+levelObjects.Count.ToString(), typeof(SpriteRenderer), typeof(CircleCollider2D), typeof(PhotonView), typeof(PhotonTransformView));
-            // //foodObject.transform.position = new Vector3(currentRandomPostion.x, currentRandomPostion.y);
-            // //foodObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.foodSprite;
-            // foodObject.GetComponent<CircleCollider2D>().isTrigger = true;
-            // /*
-            // PhotonTransformView view = foodObject.GetComponent<PhotonTransformView>();
-            // view.m_SynchronizePosition = true;
-            // PhotonView pview = foodObject.GetComponent<PhotonView>();
-            // pview.ObservedComponents = new List<Component>();
-            // pview.ObservedComponents.Add(view);
-            // */
-            // foodObject.tag = objTag;

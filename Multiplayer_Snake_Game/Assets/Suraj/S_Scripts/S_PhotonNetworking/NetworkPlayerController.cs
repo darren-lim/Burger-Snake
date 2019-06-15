@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.IO;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class NetworkPlayerController : MonoBehaviour
 {
     private PhotonView PV;
     int playerID;
     public GameObject myAvatar;
-
 
     // Initializes the network avatar with the main snake controller
     void Start()
@@ -26,6 +27,13 @@ public class NetworkPlayerController : MonoBehaviour
                                                     GameAssets.instance.SpawnPoints[playerID-1].rotation,
                                                     0);
                 myAvatar.GetComponent<S_Snake_Player>().tag = "Player_"+playerID.ToString();
+                myAvatar.GetComponent<S_Snake_Player>().playerID = playerID;
+                Text myScoreBoard = GameObject.Find("Points_P"+playerID.ToString()).GetComponent<Text>();
+                if(myScoreBoard != null)
+                {
+                    myScoreBoard.text = "Player "+playerID.ToString()+": 0";
+                }
+                myAvatar.GetComponent<S_Snake_Player>().myScoreboard = myScoreBoard;
                 myAvatar.GetComponent<S_Snake_Player>().setSelfIntersect(GameObject.FindGameObjectWithTag("Handler").GetComponent<GameHandler>().selfCollision);
                 myAvatar.GetComponent<S_Snake_Player>().SetSizeWrap(
                     GameObject.FindGameObjectWithTag("Handler").GetComponent<GameHandler>().GetWindowSize(),

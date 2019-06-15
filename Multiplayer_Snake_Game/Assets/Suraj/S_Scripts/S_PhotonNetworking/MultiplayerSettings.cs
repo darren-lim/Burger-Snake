@@ -8,7 +8,9 @@ public class MultiplayerSettings : MonoBehaviour
     
     public int maxPlayers = 4;
     public int menuScene = 1;
-    public int multiplayerScene = 3;
+    public int MainMenu = 0;
+    public int multiplayerScene = 2;
+    public int emptyScene = 3;
 
     private void Awake() 
     {
