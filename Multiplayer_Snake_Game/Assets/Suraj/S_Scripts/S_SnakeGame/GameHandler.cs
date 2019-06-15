@@ -57,7 +57,7 @@ public class GameHandler : MonoBehaviourPun
         }
         if(levelTimer == 0)
         {
-            levelTimer = 120.0f; //Two minute rounds
+            levelTimer = 20.0f; //Two minute rounds
         }
         levelEnd = false;
         timerText.text = "Time: " + ((int)levelTimer).ToString();
@@ -80,6 +80,7 @@ public class GameHandler : MonoBehaviourPun
             {
                 levelEnd = true;
                 // RPC call for end level
+                RestartGame();
             }
             // else
             // {
@@ -136,15 +137,29 @@ public class GameHandler : MonoBehaviourPun
     }
 
     //RPC call for round end
-    /*
-[PunRPC]
-void RestartGame()
-{
-    foreach(Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+
+    void RestartGame()
     {
-        PhotonNetwork.DestroyPlayerObjects(player.UserId);
+        StartCoroutine(OnRestart());
     }
-    PhotonNetwork.DestroyPlayerObjects(PhotonNetwork..ID);
-    PhotonNetwork.LoadLevel(1);
-}*/
+    
+    IEnumerator OnRestart()
+    {
+        //add who won
+        PV.RPC("LoadScene", RpcTarget.All);
+        //PhotonNetwork.DestroyAll();
+        //PhotonNetwork.LoadLevel(2);
+        yield return null;
+        /*
+        PhotonNetwork.DestroyAll();
+        Destroy(GameObject.Find("LobbyController"));
+        Destroy(GameObject.Find("RoomController"));
+        SceneManager.LoadScene(MultiplayerSettings.multiplayerSetting.menuScene);*/
+    }
+    [PunRPC]
+    void LoadScene()
+    {
+        PhotonNetwork.DestroyAll();
+        PhotonNetwork.LoadLevel(MultiplayerSettings.multiplayerSetting.multiplayerScene);
+    }
 }

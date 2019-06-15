@@ -86,7 +86,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         playersInRoom = photonPlayers.Length;
         myNumberInRoom = playersInRoom;
         PhotonNetwork.NickName = myNumberInRoom.ToString();
-        
+        PhotonNetwork.AutomaticallySyncScene = true;
         currentPlayerCountText.text = playersInRoom.ToString() + " in Room";
         if(playersInRoom > 1)
         {
