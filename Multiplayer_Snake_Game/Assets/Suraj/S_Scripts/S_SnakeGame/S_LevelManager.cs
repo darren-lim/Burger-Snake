@@ -84,7 +84,19 @@ public class S_LevelManager : MonoBehaviourPun
         {
             // Create a food object
             RandomGridPos();
-            GameObject foodObject = PhotonNetwork.Instantiate("Food", new Vector3(currentRandomPostion.x, currentRandomPostion.y, 0), Quaternion.identity, 0);
+            string prefab = Random.Range(1, 4).ToString();
+            if (prefab == "1")
+            {
+                prefab = "Lettuce";
+            } else if (prefab == "2")
+            {
+                prefab = "Patty";
+            } else
+            {
+                prefab = "Tomato";
+            }
+
+            GameObject foodObject = PhotonNetwork.Instantiate(prefab, new Vector3(currentRandomPostion.x, currentRandomPostion.y, 0), Quaternion.identity, 0);
 
             foodObject.tag = objTag;
             foodObject.name = objTag + levelObjects.Count.ToString();
