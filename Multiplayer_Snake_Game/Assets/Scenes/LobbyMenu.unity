@@ -421,8 +421,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 0}
-  viewIdField: 987
-  InstantiationId: 987
+  viewIdField: 456
+  InstantiationId: 456
   isRuntimeInstantiated: 0
 --- !u!1 &716133465
 GameObject:
