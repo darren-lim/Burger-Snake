@@ -27,6 +27,7 @@ public class NetworkPlayerController : MonoBehaviour
                                                     GameAssets.instance.SpawnPoints[playerID-1].rotation,
                                                     0);
                 myAvatar.GetComponent<S_Snake_Player>().tag = "Player_"+playerID.ToString();
+                myAvatar.GetComponent<S_Snake_Player>().playerID = playerID;
                 Text myScoreBoard = GameObject.Find("Points_P"+playerID.ToString()).GetComponent<Text>();
                 if(myScoreBoard != null)
                 {

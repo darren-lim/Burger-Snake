@@ -31,6 +31,7 @@ public class S_Snake_Player : MonoBehaviourPun
 
     float timer = 3f;
     public Text myScoreboard;
+    public int playerID = 4;
 
     void Start()
     {
@@ -44,6 +45,7 @@ public class S_Snake_Player : MonoBehaviourPun
         }
         partsHolder = new GameObject(this.name + "\'s Holder");
         partsHolder.transform.position = new Vector3(0,0);//Vector3(gridPos.x, gridPos.y);
+        partsHolder.tag = this.tag;
         // partsHolder.transform.parent = this.transform.parent.transform;
         moveDir = new Vector2Int(0, snakeSpeed);
         bodyParts = new List<GameObject>();
@@ -206,7 +208,7 @@ public class S_Snake_Player : MonoBehaviourPun
         if (bodyParts.Count == 0)
         {
             // Take the postion of the head
-            body = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Snake_Body"),
+            body = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "BodyPlayer"+playerID.ToString()),
                                             new Vector3(this.transform.position.x, this.transform.position.y),
                                             Quaternion.identity, 0);
         }
@@ -252,7 +254,7 @@ public class S_Snake_Player : MonoBehaviourPun
     void RPC_addPoints(float mult = 1.0f)
     {
         points += (uint)(1 * mult);
-        myScoreboard.text = myScoreboard.text.Substring(0,9) + points.ToString();
+        myScoreboard.text = "Player "+playerID.ToString() + ": " + points.ToString();
     }
 
     // Subtract a point with multiplier
@@ -260,13 +262,13 @@ public class S_Snake_Player : MonoBehaviourPun
     void RPC_subPoints(float mult = 1.0f)
     {
         points -= (uint)(1 * mult);
-        myScoreboard.text = myScoreboard.text.Substring(0,9) + points.ToString();
+        myScoreboard.text = "Player "+playerID.ToString() + ": " + points.ToString();
     }
 
     [PunRPC]
     void RPC_textInitialize()
     {
-        myScoreboard.text = myScoreboard.text.Substring(0,9) + points.ToString();
+        myScoreboard.text = "Player "+playerID.ToString() + ": " + points.ToString();
     }
 
     public void SetSizeWrap(Vector2Int size, bool wrap)
