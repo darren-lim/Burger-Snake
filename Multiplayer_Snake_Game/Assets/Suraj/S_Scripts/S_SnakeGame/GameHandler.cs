@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviourPun
 {
@@ -74,7 +75,10 @@ public class GameHandler : MonoBehaviourPun
                 PV.RPC("RPC_RefreshLevel", RpcTarget.AllBuffered);
                 refreshTimer -= refreshRate;
             }
-            PV.RPC("RPC_LevelTimer", RpcTarget.All);
+            levelTimer -= Time.deltaTime;
+            //timerText.text = "Time: " + ((int)levelTimer).ToString();
+            PV.RPC("UpdateTimer", RpcTarget.All, levelTimer);
+            //UpdateTimer(levelTimer);
             if (levelTimer <= 0.0f)
             {
                 levelEnd = true;
@@ -117,4 +121,19 @@ public class GameHandler : MonoBehaviourPun
     }
 
     //RPC call for round end
+
+
+    public void DisconnectPlayer()
+    {
+        StartCoroutine(DisconnectAndLoad());
+    }
+
+    IEnumerator DisconnectAndLoad()
+    {
+        //PhotonNetwork.Disconnect();
+        PhotonNetwork.LeaveRoom();
+        while (PhotonNetwork.InRoom)
+            yield return null;
+        SceneManager.LoadScene(MultiplayerSettings.multiplayerSetting.mainMenu);
+    }
 }

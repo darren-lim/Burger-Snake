@@ -129,6 +129,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         base.OnPlayerLeftRoom(otherPlayer);
         playersInRoom--;
         ResetTimer();
+        if (currentPlayerCountText == null) return;
         currentPlayerCountText.text = playersInRoom.ToString() + " in Room";
         currentTimerText.text = "Game countdown stopped";
         
@@ -139,6 +140,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         base.OnLeftRoom();
         Debug.Log("Exited Room");
         ResetTimer();
+        if (currentPlayerCountText == null) return;
         currentPlayerCountText.text = "Not in any room";
         currentTimerText.text = "";
     }
@@ -224,6 +226,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     [PunRPC]
     private void RPC_CreatePlayer()
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonNetworkPlayer"),transform.position,Quaternion.identity, 0);   
+        PhotonNetwork.InstantiateSceneObject(Path.Combine("PhotonPrefabs", "PhotonNetworkPlayer"),transform.position,Quaternion.identity, 0);   
     }
 }

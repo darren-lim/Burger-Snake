@@ -69,35 +69,31 @@ public class S_Snake_Player : MonoBehaviourPun
     
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(PV.IsMine)
+        if (other.gameObject.CompareTag("Food"))
         {
-            if (other.gameObject.CompareTag("Food"))
-            {
-                other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
-                AddBodyPart();
-            }
-            // //Check other snake collison
-            else if (!other.gameObject.CompareTag(tag))
-            {
-                timer = 3f;
-                RemoveBodyPart();
-            }
-            // // head to body Collided
-            // if (other.transform.parent != null)
-            // {
-            //     other.transform.parent.GetComponent<S_Snake_Player>().addPoints();
-            // }
-            // // head to head Collided
-            // else
-            // {
-            //     other.GetComponent<S_Snake_Player>().addPoints();
-            // }
-            if (points > 0)
-            {
-                PV.RPC("RPC_subPoints",RpcTarget.AllBuffered);
-            }
-        } 
-        //}
+            other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
+            AddBodyPart();
+        }
+        // //Check other snake collison
+        else if (!other.gameObject.CompareTag(tag))
+        {
+            timer = 3f;
+            RemoveBodyPart();
+        }
+        // // head to body Collided
+        // if (other.transform.parent != null)
+        // {
+        //     other.transform.parent.GetComponent<S_Snake_Player>().addPoints();
+        // }
+        // // head to head Collided
+        // else
+        // {
+        //     other.GetComponent<S_Snake_Player>().addPoints();
+        // }
+        if (points > 0)
+        {
+            PV.RPC("RPC_subPoints",RpcTarget.AllBuffered);
+        }
     }
 
     private void HandleInput()
@@ -206,6 +202,7 @@ public class S_Snake_Player : MonoBehaviourPun
         body.AddComponent<PhotonView>();
         body.tag = this.tag;
         bodyParts.Add(body);
+        //PV.RPC("RPC_addPoints", RpcTarget.All, 1f);
     }
 
     void RemoveBodyPart()
