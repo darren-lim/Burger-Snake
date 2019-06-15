@@ -71,4 +71,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         cancelButton.SetActive(false);
         PhotonNetwork.LeaveRoom();
     }
+
+    void OnDestroy()
+    {
+        PhotonNetwork.Disconnect();
+    }
 }

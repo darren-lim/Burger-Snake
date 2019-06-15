@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 253356665}
   m_Layer: 5
   m_Name: Points_P3
-  m_TagString: Untagged
+  m_TagString: Player_3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,18 +181,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
-    m_Alignment: 6
+    m_Alignment: 7
     m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player 3 Points:   '
+  m_Text: No Player 3
 --- !u!222 &253356664
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -306,7 +306,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 60
+    m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -560,7 +560,7 @@ GameObject:
   - component: {fileID: 891408254}
   m_Layer: 5
   m_Name: Points_P2
-  m_TagString: Untagged
+  m_TagString: Player_2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -606,18 +606,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
-    m_Alignment: 2
+    m_Alignment: 1
     m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player 2 Points:   '
+  m_Text: No Player 2
 --- !u!222 &891408253
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -745,7 +745,7 @@ GameObject:
   - component: {fileID: 1265741655}
   m_Layer: 5
   m_Name: Points_P4
-  m_TagString: Untagged
+  m_TagString: Player_4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -791,18 +791,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
-    m_Alignment: 8
+    m_Alignment: 7
     m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player 4 Points:   '
+  m_Text: 'No Player 4   '
 --- !u!222 &1265741654
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1172,7 +1172,7 @@ GameObject:
   - component: {fileID: 1756042462}
   m_Layer: 5
   m_Name: Points_P1
-  m_TagString: Untagged
+  m_TagString: Player_1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1218,18 +1218,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player 1 Points:'
+  m_Text: No Player 1
 --- !u!222 &1756042461
 CanvasRenderer:
   m_ObjectHideFlags: 0

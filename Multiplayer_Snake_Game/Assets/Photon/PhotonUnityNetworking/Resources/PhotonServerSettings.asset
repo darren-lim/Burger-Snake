@@ -44,5 +44,6 @@ MonoBehaviour:
   - RPC_LevelTimer
   - UpdateTimer
   - LoadScene
+  - RPC_textInitialize
   DisableAutoOpenWizard: 1
   ShowSettings: 0

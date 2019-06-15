@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.IO;
+using UnityEngine.UI;
 
 public class S_Snake_Player : MonoBehaviourPun
 {
@@ -29,6 +30,7 @@ public class S_Snake_Player : MonoBehaviourPun
     private float simulationTimer;
 
     float timer = 3f;
+    public Text myScoreboard;
 
     void Start()
     {
@@ -75,6 +77,7 @@ public class S_Snake_Player : MonoBehaviourPun
             //SetFoodInactive(other.gameObject);
             //other.gameObject.SetActive(false); // NEED TO MAKE THIS RPC FUNCTION
             AddBodyPart();
+            PV.RPC("RPC_addPoints", RpcTarget.All,1.0f);
         }
         // //Check other snake collison
         else if (!other.gameObject.CompareTag(tag) && timer <= 0)
@@ -98,7 +101,7 @@ public class S_Snake_Player : MonoBehaviourPun
             // }
             if (points > 0)
             {
-                PV.RPC("RPC_subPoints", RpcTarget.AllBuffered);
+                PV.RPC("RPC_subPoints", RpcTarget.All,1.0f);
             }
         }
     }
@@ -167,6 +170,7 @@ public class S_Snake_Player : MonoBehaviourPun
 
     private void HandleOutOfBounds(int windowXSize, int windowYSize, bool canWrap)
     {
+        
         if (canWrap)
         {
             // Wrap around i.e. Go to the other side
@@ -248,6 +252,7 @@ public class S_Snake_Player : MonoBehaviourPun
     void RPC_addPoints(float mult = 1.0f)
     {
         points += (uint)(1 * mult);
+        myScoreboard.text = myScoreboard.text.Substring(0,9) + points.ToString();
     }
 
     // Subtract a point with multiplier
@@ -255,6 +260,13 @@ public class S_Snake_Player : MonoBehaviourPun
     void RPC_subPoints(float mult = 1.0f)
     {
         points -= (uint)(1 * mult);
+        myScoreboard.text = myScoreboard.text.Substring(0,9) + points.ToString();
+    }
+
+    [PunRPC]
+    void RPC_textInitialize()
+    {
+        myScoreboard.text = myScoreboard.text.Substring(0,9) + points.ToString();
     }
 
     public void SetSizeWrap(Vector2Int size, bool wrap)
