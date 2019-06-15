@@ -62,13 +62,13 @@ public class S_Snake_Player : MonoBehaviourPun
 
     void FixedUpdate()
     {
+        HandleInput();
         simulationTimer += Time.deltaTime;
         if (simulationTimer >= simulationRate)
         {
             HandleMovement();
             simulationTimer -= simulationRate;
         }
-        HandleInput();
     }
 
     void OnTriggerEnter2D(Collider2D other)
