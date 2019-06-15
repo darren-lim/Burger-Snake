@@ -208,12 +208,12 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         isGameLoaded = true;
         if (LobbyCanvas == null) return;
         LobbyCanvas.gameObject.SetActive(false);
+        PhotonNetwork.AutomaticallySyncScene = true;
         if (!PhotonNetwork.IsMasterClient)
         {
             return;
         }
         PhotonNetwork.CurrentRoom.IsOpen = false;
-        PhotonNetwork.AutomaticallySyncScene = true;
         PV.RPC("LoadMulti", RpcTarget.All);
     }
 
@@ -281,5 +281,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     void LoadMulti()
     {
         PhotonNetwork.LoadLevel(MultiplayerSettings.multiplayerSetting.multiplayerScene);
+        if (LobbyCanvas == null) return;
+        LobbyCanvas.gameObject.SetActive(false);
     }
 }

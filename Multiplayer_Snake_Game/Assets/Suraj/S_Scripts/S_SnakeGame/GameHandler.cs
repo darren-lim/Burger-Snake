@@ -36,18 +36,18 @@ public class GameHandler : MonoBehaviourPun
     // Network Stuff
     private GameObject roomCache;
     private PhotonView PV;
-    
+
     void Start()
     {
         PV = GetComponent<PhotonView>();
         levelBack = GameObject.FindGameObjectWithTag("Background");
-        levelSize = new Vector2Int(2*(int)levelBack.transform.localScale.x, 2*(int)levelBack.transform.localScale.y);
+        levelSize = new Vector2Int(2 * (int)levelBack.transform.localScale.x, 2 * (int)levelBack.transform.localScale.y);
         levelGrid = gameObject.AddComponent<S_LevelManager>();
         levelGrid.StartManager(levelSize.x, levelSize.y, levelSize.x / marginPercent, levelSize.x / marginPercent, numberOfFood);
         //levelGrid = new S_LevelManager(levelSize.x,levelSize.y, levelSize.x/marginPercent, levelSize.x/marginPercent, numberOfFood);
         refreshTimer = 0.0f;
         roomCache = GameObject.FindGameObjectWithTag("Room");
-        if(roomCache != null)
+        if (roomCache != null)
         {
             playerCount = roomCache.GetComponent<PhotonRoom>().playersInRoom;
         }
@@ -55,7 +55,7 @@ public class GameHandler : MonoBehaviourPun
         {
             playerCount = 1;
         }
-        if(levelTimer == 0)
+        if (levelTimer == 0)
         {
             levelTimer = 120.0f; //Two minute rounds
         }
@@ -66,7 +66,7 @@ public class GameHandler : MonoBehaviourPun
     void FixedUpdate()
     {
         // Only master client will handle level updates
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
             refreshTimer += Time.deltaTime;
             if (refreshTimer >= refreshRate)
@@ -114,6 +114,7 @@ public class GameHandler : MonoBehaviourPun
     [PunRPC]
     void RPC_LevelTimer()
     {
+        if (levelTimer <= 0) return;
         levelTimer -= Time.deltaTime;
         timerText.text = "Time: " + ((int)levelTimer).ToString();
     }
@@ -137,7 +138,6 @@ public class GameHandler : MonoBehaviourPun
     }
 
     //RPC call for round end
-    [PunRPC]
     void RestartGame()
     {
         StartCoroutine(OnRestart());
@@ -164,4 +164,4 @@ public class GameHandler : MonoBehaviourPun
         Destroy(GameObject.Find("RoomController"));
         SceneManager.LoadScene(MultiplayerSettings.multiplayerSetting.MainMenu);
     }
-}
+}

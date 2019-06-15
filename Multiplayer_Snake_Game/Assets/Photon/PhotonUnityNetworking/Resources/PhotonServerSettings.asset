@@ -55,5 +55,6 @@ MonoBehaviour:
   - ResetReadyPlayers
   - LoadMulti
   - RPC_textInitialize
+  - RealoadScene
   DisableAutoOpenWizard: 1
   ShowSettings: 0
